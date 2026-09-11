@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { businessService } from "@/services/business.service";
 import { Sparkles, ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,11 +18,33 @@ const steps = [
 
 export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    category: "",
+    website: "",
+    instagram: "",
+    location: "",
+    target_customer: "",
+    preferred_language: "hinglish",
+  });
   const router = useRouter();
 
-  const handleNext = () => {
-    if (currentStep < steps.length - 1) {
+  const handleNext = async () => {
+    if (currentStep < steps.length - 2) {
       setCurrentStep(prev => prev + 1);
+    } else if (currentStep === steps.length - 2) {
+      setIsSubmitting(true);
+      setError("");
+      try {
+        await businessService.createBusiness(formData);
+        setCurrentStep(prev => prev + 1);
+      } catch (err: any) {
+        setError(err.message || "Unable to create your business. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       router.push("/dashboard");
     }
@@ -69,7 +92,7 @@ export default function OnboardingPage() {
         </div>
       </div>
 
-      <Card className="w-full max-w-2xl glass-card border-primary-200/50 shadow-xl shadow-primary-500/5">
+      <Card className="w-full max-w-2xl bg-card border-border shadow-lg">
         <CardContent className="p-8 sm:p-12">
           {currentStep === 0 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -81,11 +104,11 @@ export default function OnboardingPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="businessName">Business Name</Label>
-                  <Input id="businessName" placeholder="e.g. Sharma Fashion" className="h-12 text-lg" />
+                  <Input id="businessName" placeholder="e.g. Sharma Fashion" className="h-12 text-lg" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Business Category</Label>
-                  <select id="category" className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+                  <select id="category" className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})}>
                     <option value="">Select a category</option>
                     <option value="clothing">Clothing / Apparel</option>
                     <option value="restaurant">Restaurant / Cafe</option>
@@ -111,15 +134,15 @@ export default function OnboardingPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="website">Website (Optional)</Label>
-                  <Input id="website" placeholder="https://www.example.com" className="h-12 text-lg" />
+                  <Input id="website" placeholder="https://www.example.com" className="h-12 text-lg" value={formData.website} onChange={(e) => setFormData({...formData, website: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="instagram">Instagram Handle</Label>
-                  <Input id="instagram" placeholder="@sharmafashion" className="h-12 text-lg" />
+                  <Input id="instagram" placeholder="@sharmafashion" className="h-12 text-lg" value={formData.instagram} onChange={(e) => setFormData({...formData, instagram: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="location">City / Location</Label>
-                  <Input id="location" placeholder="e.g. Mumbai, Maharashtra" className="h-12 text-lg" />
+                  <Input id="location" placeholder="e.g. Mumbai, Maharashtra" className="h-12 text-lg" value={formData.location} onChange={(e) => setFormData({...formData, location: e.target.value})} />
                 </div>
               </div>
             </div>
@@ -135,11 +158,11 @@ export default function OnboardingPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="targetCustomer">Target Customer Description</Label>
-                  <Input id="targetCustomer" placeholder="e.g. Young professionals looking for affordable ethnic wear" className="h-12 text-lg" />
+                  <Input id="targetCustomer" placeholder="e.g. Young professionals looking for affordable ethnic wear" className="h-12 text-lg" value={formData.target_customer} onChange={(e) => setFormData({...formData, target_customer: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="language">Preferred Marketing Language</Label>
-                  <select id="language" className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+                  <select id="language" className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.preferred_language} onChange={(e) => setFormData({...formData, preferred_language: e.target.value})}>
                     <option value="hinglish">Hinglish</option>
                     <option value="english">English</option>
                     <option value="hindi">Hindi</option>
@@ -164,18 +187,24 @@ export default function OnboardingPage() {
             </div>
           )}
 
+          {error && (
+            <div className="mt-6 p-4 text-sm text-red-500 bg-red-50 rounded-md border border-red-100">
+              {error}
+            </div>
+          )}
+
           <div className="flex items-center justify-between mt-12 pt-6 border-t border-border">
             <Button 
               variant="outline" 
               onClick={handleBack} 
-              disabled={currentStep === 0}
+              disabled={currentStep === 0 || isSubmitting}
               className={currentStep === 0 ? "opacity-0 pointer-events-none" : ""}
             >
               <ArrowLeft className="w-4 h-4 mr-2" /> Back
             </Button>
-            <Button onClick={handleNext} className="min-w-[120px]">
-              {currentStep === steps.length - 1 ? "Go to Dashboard" : "Continue"} 
-              {currentStep < steps.length - 1 && <ArrowRight className="w-4 h-4 ml-2" />}
+            <Button onClick={handleNext} disabled={isSubmitting} className="min-w-[120px]">
+              {isSubmitting ? "Submitting..." : currentStep === steps.length - 1 ? "Go to Dashboard" : "Continue"} 
+              {!isSubmitting && currentStep < steps.length - 1 && <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
           </div>
         </CardContent>

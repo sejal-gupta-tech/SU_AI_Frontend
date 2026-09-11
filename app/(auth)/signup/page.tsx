@@ -67,7 +67,7 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <Card className="glass-card shadow-lg border-primary-100/50">
+        <Card className="bg-card shadow-lg border-border">
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">

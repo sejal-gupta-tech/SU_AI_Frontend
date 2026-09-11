@@ -44,25 +44,25 @@ export default function Home() {
         </div>
 
         <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div className="glass-card p-8 rounded-2xl text-left space-y-4">
+          <div className="bg-card border border-border shadow-sm p-8 rounded-2xl text-left space-y-4 hover:-translate-y-1 hover:shadow-md hover:border-primary-200 transition-all">
             <div className="h-12 w-12 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600">
               <Sparkles className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-semibold">AI Content Creation</h3>
+            <h3 className="text-xl font-semibold text-foreground">AI Content Creation</h3>
             <p className="text-muted-foreground">Generate ready-to-post reels and images tailored to your specific business and audience.</p>
           </div>
-          <div className="glass-card p-8 rounded-2xl text-left space-y-4">
+          <div className="bg-card border border-border shadow-sm p-8 rounded-2xl text-left space-y-4 hover:-translate-y-1 hover:shadow-md hover:border-primary-200 transition-all">
             <div className="h-12 w-12 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600">
               <TrendingUp className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-semibold">Smart Campaigns</h3>
+            <h3 className="text-xl font-semibold text-foreground">Smart Campaigns</h3>
             <p className="text-muted-foreground">Launch targeted ads across platforms without needing marketing expertise.</p>
           </div>
-          <div className="glass-card p-8 rounded-2xl text-left space-y-4">
+          <div className="bg-card border border-border shadow-sm p-8 rounded-2xl text-left space-y-4 hover:-translate-y-1 hover:shadow-md hover:border-primary-200 transition-all">
             <div className="h-12 w-12 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600">
               <Users className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-semibold">Customer Engagement</h3>
+            <h3 className="text-xl font-semibold text-foreground">Customer Engagement</h3>
             <p className="text-muted-foreground">Manage messages, reviews, and customer relationships in one unified inbox.</p>
           </div>
         </div>

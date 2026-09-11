@@ -3,50 +3,41 @@ import { User, APIResponse } from '@/types';
 
 export const authService = {
   login: async (email: string, password: string):Promise<{token: string, user: User}> => {
-    // MOCK IMPLEMENTATION
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email === 'test@example.com' && password === 'password') {
-          resolve({
-            token: 'mock-jwt-token-123',
-            user: {
-              id: 'u_1',
-              name: 'Test User',
-              email: 'test@example.com'
-            }
-          });
-        } else {
-          reject({ message: 'Invalid credentials' });
-        }
-      }, 1000);
-    });
-    
-    // REAL IMPLEMENTATION (uncomment when backend is ready)
-    /*
-    const response = await api.post<APIResponse<{token: string, user: User}>>('/auth/login', { email, password });
-    return response.data.data;
-    */
+    try {
+      const response = await api.post('/api/v1/auth/login', { email, password });
+      return {
+        token: response.data.access_token,
+        user: response.data.user
+      };
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.detail) {
+        throw new Error(error.response.data.detail);
+      }
+      throw new Error('An error occurred during login');
+    }
   },
 
   signup: async (name: string, email: string, password: string):Promise<{token: string, user: User}> => {
-    // MOCK IMPLEMENTATION
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          token: 'mock-jwt-token-new',
-          user: {
-            id: 'u_2',
-            name: name,
-            email: email
-          }
-        });
-      }, 1000);
-    });
+    try {
+      const response = await api.post('/api/v1/auth/signup', { name, email, password });
+      return {
+        token: response.data.access_token,
+        user: response.data.user
+      };
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.detail) {
+        throw new Error(error.response.data.detail);
+      }
+      throw new Error('An error occurred during signup');
+    }
+  },
 
-    // REAL IMPLEMENTATION
-    /*
-    const response = await api.post<APIResponse<{token: string, user: User}>>('/auth/signup', { name, email, password });
-    return response.data.data;
-    */
+  getCurrentUser: async (): Promise<User> => {
+    try {
+      const response = await api.get('/api/v1/auth/me');
+      return response.data;
+    } catch (error: any) {
+      throw new Error('Failed to fetch user');
+    }
   }
 };
