@@ -12,6 +12,7 @@ export default function BusinessProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
+  const [hasBusiness, setHasBusiness] = useState(false);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -28,18 +29,22 @@ export default function BusinessProfilePage() {
     const fetchBusiness = async () => {
       try {
         const business = await businessService.getMyBusiness();
-        setFormData({
-          name: business.name || "",
-          category: business.category || "",
-          website: business.website || "",
-          instagram: business.instagram || "",
-          location: business.location || "",
-          target_customer: business.target_customer || "",
-          preferred_language: business.preferred_language || "",
-          description: business.description || "",
-        });
+        if (business) {
+          setHasBusiness(true);
+          setFormData({
+            name: business.name || "",
+            category: business.category || "clothing",
+            website: business.website || "",
+            instagram: business.instagram || "",
+            location: business.location || "",
+            target_customer: business.target_customer || "",
+            preferred_language: business.preferred_language || "english",
+            description: business.description || "",
+          });
+        }
       } catch (err: any) {
-        console.error("Failed to fetch business:", err);
+        setHasBusiness(false);
+        // It's normal to not have a business yet
       } finally {
         setIsFetching(false);
       }
@@ -53,7 +58,12 @@ export default function BusinessProfilePage() {
     setError("");
     setIsSaved(false);
     try {
-      await businessService.updateBusiness(formData);
+      if (hasBusiness) {
+        await businessService.updateBusiness(formData);
+      } else {
+        await businessService.createBusiness(formData as any);
+        setHasBusiness(true);
+      }
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 3000);
     } catch (err: any) {
