@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { businessService } from "@/services/business.service";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,17 +11,66 @@ import { Store, Loader2, Save } from "lucide-react";
 export default function BusinessProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    category: "",
+    website: "",
+    instagram: "",
+    location: "",
+    target_customer: "",
+    preferred_language: "",
+    description: "",
+  });
 
-  const handleSave = (e: React.FormEvent) => {
+  useEffect(() => {
+    const fetchBusiness = async () => {
+      try {
+        const business = await businessService.getMyBusiness();
+        setFormData({
+          name: business.name || "",
+          category: business.category || "",
+          website: business.website || "",
+          instagram: business.instagram || "",
+          location: business.location || "",
+          target_customer: business.target_customer || "",
+          preferred_language: business.preferred_language || "",
+          description: business.description || "",
+        });
+      } catch (err: any) {
+        console.error("Failed to fetch business:", err);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+    fetchBusiness();
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Mock save
-    setTimeout(() => {
-      setIsLoading(false);
+    setError("");
+    setIsSaved(false);
+    try {
+      await businessService.updateBusiness(formData);
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 3000);
-    }, 1000);
+    } catch (err: any) {
+      setError(err.message || "Unable to save your business information. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  if (isFetching) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+        <span className="ml-2 text-muted-foreground">Loading business information...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl space-y-6 animate-in fade-in duration-500">
@@ -41,11 +91,11 @@ export default function BusinessProfilePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="businessName">Business Name</Label>
-                  <Input id="businessName" defaultValue="Sharma Fashion" />
+                  <Input id="businessName" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
-                  <select id="category" className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" defaultValue="clothing">
+                  <select id="category" className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
                     <option value="clothing">Clothing / Apparel</option>
                     <option value="restaurant">Restaurant / Cafe</option>
                   </select>
@@ -56,7 +106,8 @@ export default function BusinessProfilePage() {
                 <textarea 
                   id="description" 
                   className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-                  defaultValue="Premium ethnic and western wear for young professionals."
+                  value={formData.description}
+                  onChange={e => setFormData({...formData, description: e.target.value})}
                 />
               </div>
             </CardContent>
@@ -71,15 +122,15 @@ export default function BusinessProfilePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="website">Website URL</Label>
-                  <Input id="website" defaultValue="https://sharmafashion.in" />
+                  <Input id="website" value={formData.website} onChange={e => setFormData({...formData, website: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="instagram">Instagram Handle</Label>
-                  <Input id="instagram" defaultValue="@sharmafashion" />
+                  <Input id="instagram" value={formData.instagram} onChange={e => setFormData({...formData, instagram: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="location">City / Location</Label>
-                  <Input id="location" defaultValue="Mumbai, Maharashtra" />
+                  <Input id="location" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
                 </div>
               </div>
             </CardContent>
@@ -94,11 +145,11 @@ export default function BusinessProfilePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="targetCustomer">Target Customer</Label>
-                  <Input id="targetCustomer" defaultValue="Young professionals looking for affordable ethnic wear" />
+                  <Input id="targetCustomer" value={formData.target_customer} onChange={e => setFormData({...formData, target_customer: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="language">Preferred Language</Label>
-                  <select id="language" className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" defaultValue="hinglish">
+                  <select id="language" className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.preferred_language} onChange={e => setFormData({...formData, preferred_language: e.target.value})}>
                     <option value="hinglish">Hinglish</option>
                     <option value="english">English</option>
                     <option value="hindi">Hindi</option>
@@ -108,6 +159,11 @@ export default function BusinessProfilePage() {
             </CardContent>
           </Card>
 
+          {error && (
+            <div className="text-sm text-red-500 bg-red-50 p-3 rounded-md">
+              {error}
+            </div>
+          )}
           <div className="flex justify-end pt-4">
             <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
               {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
