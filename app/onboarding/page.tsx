@@ -92,7 +92,7 @@ export default function OnboardingPage() {
         </div>
       </div>
 
-      <Card className="w-full max-w-2xl glass-card border-primary-200/50 shadow-xl shadow-primary-500/5">
+      <Card className="w-full max-w-2xl bg-card border-border shadow-lg">
         <CardContent className="p-8 sm:p-12">
           {currentStep === 0 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
