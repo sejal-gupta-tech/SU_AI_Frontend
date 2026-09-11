@@ -4,9 +4,27 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles, MessageSquare, Star, Megaphone, Image as ImageIcon, Video, Camera, TrendingUp } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { insightsService } from "@/services/insights.service";
+import { Insight } from "@/types/insights";
+import { AIInsights } from "@/components/ai/AIInsights";
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const [insights, setInsights] = useState<Insight[]>([]);
+
+  useEffect(() => {
+    const fetchInsights = async () => {
+      try {
+        const res = await insightsService.getInsights();
+        setInsights(res.data);
+      } catch (err) {
+        console.error("Failed to load insights", err);
+      }
+    };
+    fetchInsights();
+  }, []);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -66,16 +84,20 @@ export default function DashboardPage() {
       <div className="space-y-4">
         <h2 className="text-xl font-semibold tracking-tight">Quick Actions</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group border-primary-200 hover:border-primary-500 hover:bg-primary-50">
-            <ImageIcon className="h-6 w-6 text-primary-600" />
-            <span className="font-semibold text-primary-900">Create Post</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group border-primary-200 hover:border-primary-500 hover:bg-primary-50" asChild>
+            <Link href="/content?type=post">
+              <ImageIcon className="h-6 w-6 text-primary-600" />
+              <span className="font-semibold text-primary-900">Create Post</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            </Link>
           </Button>
           
-          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group hover:border-indigo-500 hover:bg-indigo-50">
-            <Video className="h-6 w-6 text-indigo-600" />
-            <span className="font-semibold text-indigo-900">Create Reel</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group hover:border-indigo-500 hover:bg-indigo-50" asChild>
+            <Link href="/content?type=reel">
+              <Video className="h-6 w-6 text-indigo-600" />
+              <span className="font-semibold text-indigo-900">Create Reel</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            </Link>
           </Button>
 
           <Button variant="outline" className="h-24 flex flex-col gap-2 relative opacity-70" disabled>
@@ -115,19 +137,7 @@ export default function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div className="flex gap-4 items-start p-4 bg-primary-50 rounded-lg border border-primary-100">
-                <div className="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center shrink-0">
-                  <TrendingUp className="h-4 w-4 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-primary-900">Trending in your area</h4>
-                  <p className="text-xs text-primary-700 mt-1">
-                    Diwali offers are performing well. Consider launching a festive discount reel this week.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <AIInsights insights={insights} />
           </CardContent>
         </Card>
       </div>

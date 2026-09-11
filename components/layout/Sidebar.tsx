@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, Palette, Package, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Store, Palette, Package, Settings, LogOut, Sparkles, Megaphone, MessageSquare, Star, Library } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth/AuthProvider";
 
@@ -11,6 +11,11 @@ const navigation = [
   { name: "Business", href: "/business", icon: Store },
   { name: "Brand Kit", href: "/brand", icon: Palette },
   { name: "Products", href: "/products", icon: Package },
+  { name: "AI Content", href: "/content", icon: Sparkles },
+  { name: "Content Library", href: "/content-library", icon: Library },
+  { name: "Campaigns", href: "/campaigns", icon: Megaphone },
+  { name: "Messages", href: "/messages", icon: MessageSquare },
+  { name: "Reviews", href: "/reviews", icon: Star },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 

@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Package, Search, Plus, Edit, Trash2, X } from "lucide-react";
+import { Package, Search, Plus, Edit, Trash2, X, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 // Mock Product Data
 const initialProducts = [
@@ -142,6 +143,11 @@ export default function ProductsPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right space-x-2">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-primary-600 hover:text-primary-700 hover:bg-primary-50" asChild>
+                        <Link href={`/content?productId=${product.id}`} title="Generate AI Content">
+                          <Sparkles className="h-4 w-4 text-indigo-500" />
+                        </Link>
+                      </Button>
                       <Button variant="ghost" size="icon" className="h-8 w-8 text-primary-600 hover:text-primary-700 hover:bg-primary-50">
                         <Edit className="h-4 w-4" />
                       </Button>
