@@ -34,3 +34,25 @@ export interface GenerateContentRequest {
   callToAction?: string;
   additionalInstructions?: string;
 }
+
+export interface GeneratePostRequest {
+  product_id: string;
+  platform: string;
+  objective: string;
+  language: string;
+  additional_instruction?: string;
+}
+
+export interface GeneratedPost {
+  product_id: string;
+  platform: string;
+  objective: string;
+
+  headline: string;
+  caption: string;
+  call_to_action: string;
+
+  hashtags: string[];
+
+  creative_direction?: string;
+}

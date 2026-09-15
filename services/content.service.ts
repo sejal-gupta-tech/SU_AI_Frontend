@@ -1,4 +1,5 @@
-import { GeneratedContent, GenerateContentRequest } from '@/types/content';
+import { GeneratedContent, GenerateContentRequest, GeneratePostRequest, GeneratedPost } from '@/types/content';
+import api from "@/lib/api";
 
 // Mock Data
 const mockContent: GeneratedContent[] = [
@@ -84,3 +85,15 @@ export const contentService = {
     }
   }
 };
+
+export async function generatePost(
+  payload: GeneratePostRequest
+): Promise<GeneratedPost> {
+
+  const response = await api.post(
+    "/api/v1/content/generate-post",
+    payload
+  );
+
+  return response.data.data;
+}
