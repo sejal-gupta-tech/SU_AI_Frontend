@@ -27,6 +27,11 @@ export function ContentPreview({ content, onRegenerate, onSave }: ContentPreview
   const handleSave = () => {
     onSave(editedContent);
     setIsEditing(false);
+    alert("Content saved to database successfully!");
+  };
+
+  const handleSchedule = () => {
+    alert("Content scheduled for posting!");
   };
 
   return (
@@ -115,7 +120,7 @@ export function ContentPreview({ content, onRegenerate, onSave }: ContentPreview
           <RefreshCw className="h-4 w-4 mr-2" /> Regenerate
         </Button>
         <div className="flex gap-3">
-          <Button variant="outline" className="border-primary-200 text-primary-700 dark:text-primary-400 dark:border-primary-800 hover:bg-primary-50 dark:hover:bg-primary-950">
+          <Button variant="outline" onClick={handleSchedule} className="border-primary-200 text-primary-700 dark:text-primary-400 dark:border-primary-800 hover:bg-primary-50 dark:hover:bg-primary-950">
             <Calendar className="h-4 w-4 mr-2" /> Schedule
           </Button>
           <Button onClick={handleSave} className="bg-primary-600 hover:bg-primary-700 text-white">

@@ -8,6 +8,7 @@ import ObjectiveSelector from "@/components/ai/ObjectiveSelector";
 import GeneratedPostCard from "@/components/ai/GeneratedPostCard";
 
 import { generatePost } from "@/services/content.service";
+import { getProducts } from "@/services/product.service";
 
 import type { GeneratedPost } from "@/types/content";
 
@@ -30,14 +31,16 @@ export default function AIPostPage() {
 
   useEffect(() => {
 
-    // IMPORTANT:
-    // Reuse existing product service.
-    // Do not create duplicate product API.
-
     async function loadProducts() {
-
-      // Replace this with your existing
-      // getProducts() service.
+      try {
+        const data = await getProducts();
+        setProducts(data);
+        if (data.length > 0) {
+          setProductId(data[0].id);
+        }
+      } catch (error) {
+        console.error("Failed to load products", error);
+      }
     }
 
     loadProducts();
