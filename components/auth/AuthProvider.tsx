@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Check for existing session on mount
     const checkAuth = () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('access_token');
       const savedUser = localStorage.getItem('user');
       
       if (token && savedUser) {
@@ -49,14 +49,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [user, isLoading, pathname, router]);
 
   const login = (token: string, userData: User) => {
-    localStorage.setItem('token', token);
+    localStorage.setItem('access_token', token);
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
     router.push('/dashboard');
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     setUser(null);
     router.push('/login');

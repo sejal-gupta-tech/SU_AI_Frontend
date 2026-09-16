@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { campaignService } from '@/services/campaign.service';
 import { Campaign, GenerateCampaignRequest } from '@/types/campaign';
-import { Megaphone, Target, BarChart2, Plus, Loader2 } from 'lucide-react';
+import { Megaphone, Target, BarChart2, Plus, Loader2, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -27,6 +27,15 @@ export default function CampaignsPage() {
       console.error(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await campaignService.deleteCampaign(id);
+      setCampaigns(campaigns.filter(c => c._id !== id && c.id !== id));
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -131,13 +140,18 @@ export default function CampaignsPage() {
       ) : (
         <div className="space-y-6">
           {campaigns.map(campaign => (
-            <Card key={campaign._id} className="overflow-hidden">
+            <Card key={campaign.id || campaign._id || Math.random().toString()} className="overflow-hidden">
               <div className="bg-primary-50 p-4 border-b border-primary-100 flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-bold text-primary-900">{campaign.name}</h3>
                   <p className="text-sm text-primary-700">Goal: {campaign.goal} • {campaign.duration}</p>
                 </div>
-                <Button variant="outline" size="sm">View Full Strategy</Button>
+                                <div className="flex gap-2">
+                  <Button variant="outline" size="sm">View Full Strategy</Button>
+                  <Button variant="destructive" size="sm" onClick={() => handleDelete(campaign.id || campaign._id as string)}>
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
               <CardContent className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
