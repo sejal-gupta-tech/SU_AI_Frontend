@@ -110,6 +110,14 @@ export default function BrandKitPage() {
   const primaryColor = form.primary_color || "#204972";
   const secondaryColor = form.secondary_color || "#84CC16";
 
+  const getLogoUrl = (url: string | undefined) => {
+    if (!url) return "";
+    const normalizedUrl = url.replace(/\\/g, "/");
+    if (normalizedUrl.startsWith("http")) return normalizedUrl;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+    return `${baseUrl}${normalizedUrl.startsWith("/") ? "" : "/"}${normalizedUrl}`;
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* Header */}
@@ -152,7 +160,7 @@ export default function BrandKitPage() {
               <div className="flex items-center gap-4">
                 {form.logo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={form.logo_url} alt="Brand Logo" className="h-20 w-20 rounded-xl object-contain border border-border bg-muted" />
+                  <img src={getLogoUrl(form.logo_url)} alt="Brand Logo" className="h-20 w-20 rounded-xl object-contain border border-border bg-muted" />
                 ) : (
                   <div className="h-20 w-20 rounded-xl border-2 border-dashed border-border bg-muted flex items-center justify-center">
                     <Palette className="h-8 w-8 text-muted-foreground" />
@@ -333,7 +341,7 @@ export default function BrandKitPage() {
               <div className="h-36 flex items-center justify-center p-6" style={{ background: `linear-gradient(135deg, ${primaryColor}25, ${secondaryColor}25)` }}>
                 {form.logo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={form.logo_url} alt="Logo" className="h-20 object-contain" />
+                  <img src={getLogoUrl(form.logo_url)} alt="Logo" className="h-20 object-contain" />
                 ) : (
                   <Sparkles className="w-14 h-14 opacity-60" style={{ color: primaryColor }} />
                 )}

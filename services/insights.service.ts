@@ -1,44 +1,28 @@
-import { Insight } from '@/types/insights';
+import api from "@/lib/api";
 
-const mockInsights: Insight[] = [
+const mockInsights = [
   {
-    _id: '1',
-    title: 'Trending in your area',
-    description: 'Short-form video content is currently performing strongly among your target demographic.',
-    priority: 'High',
-    recommendedAction: 'Create a 20-second product Reel highlighting your newest arrivals.',
-    actionType: 'Create Reel',
-    actionTarget: 'Reel Script',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    _id: "1",
+    title: "High Engagement on Silk Sarees",
+    description: "Your recent posts featuring Silk Sarees have 40% higher engagement. We recommend creating more content around this product category.",
+    priority: "High",
+    recommendedAction: "Create a new Reel focusing on Silk Saree draping styles.",
+    actionType: "Create Reel",
+    actionTarget: "reel"
   },
   {
-    _id: '2',
-    title: 'Audience Engagement',
-    description: 'Your audience is most active between 6 PM and 8 PM on weekdays.',
-    priority: 'Medium',
-    recommendedAction: 'Schedule your next Instagram post for Tuesday at 7 PM for maximum reach.',
-    actionType: 'Create Post',
-    actionTarget: 'Instagram Post',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    _id: '3',
-    title: 'Product Promotion Opportunity',
-    description: 'Winter wear searches have increased by 40% in your location.',
-    priority: 'High',
-    recommendedAction: 'Launch a promotional ad for your winter collection.',
-    actionType: 'Create Ad',
-    actionTarget: 'Ad Copy',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    _id: "2",
+    title: "Untapped Audience Segment",
+    description: "Analytics show growing interest from users aged 18-24 in your modern fusion wear.",
+    priority: "Medium",
+    recommendedAction: "Create a targeted Instagram Post highlighting trendy fusion styles.",
+    actionType: "Create Post",
+    actionTarget: "post"
   }
 ];
 
-export const insightsService = {
-  async getInsights(): Promise<{ data: Insight[] }> {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    return { data: [...mockInsights] };
-  }
+export const getDashboardInsights = async () => {
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 800));
+  return { data: mockInsights };
 };

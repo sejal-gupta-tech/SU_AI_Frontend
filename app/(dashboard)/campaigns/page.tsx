@@ -3,17 +3,20 @@
 import { useState, useEffect } from 'react';
 import { campaignService } from '@/services/campaign.service';
 import { Campaign, GenerateCampaignRequest } from '@/types/campaign';
-import { Megaphone, Target, BarChart2, Plus, Loader2, Trash2 } from 'lucide-react';
+import { Megaphone, Target, BarChart2, Plus, Loader2, Trash2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import Link from 'next/link';
 
 export default function CampaignsPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [expandedCampaignId, setExpandedCampaignId] = useState<string | null>(null);
+  const [generatingAdCopyId, setGeneratingAdCopyId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchCampaigns();
@@ -36,6 +39,33 @@ export default function CampaignsPage() {
       setCampaigns(campaigns.filter(c => c._id !== id && c.id !== id));
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleGenerateAdCopy = async (campaign: Campaign) => {
+    const campaignId = (campaign.id || campaign._id) as string;
+    setGeneratingAdCopyId(campaignId);
+    try {
+      const res = await campaignService.generateAdCopy(campaignId, {
+        name: campaign.name,
+        goal: campaign.goal,
+        audience: campaign.targetAudience
+      });
+      // Try to update the backend, but update local state regardless of success to simulate UI response
+      try {
+        await campaignService.updateCampaign(campaignId, { adCopy: res.data });
+      } catch (e) {
+        console.warn("Could not save to backend, updating local state only", e);
+      }
+      setCampaigns(campaigns.map(c => 
+        (c.id === campaignId || c._id === campaignId) 
+          ? { ...c, adCopy: res.data } 
+          : c
+      ));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setGeneratingAdCopyId(null);
     }
   };
 
@@ -146,28 +176,91 @@ export default function CampaignsPage() {
                   <h3 className="text-lg font-bold text-primary-900">{campaign.name}</h3>
                   <p className="text-sm text-primary-700">Goal: {campaign.goal} • {campaign.duration}</p>
                 </div>
-                                <div className="flex gap-2">
-                  <Button variant="outline" size="sm">View Full Strategy</Button>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={() => setExpandedCampaignId(expandedCampaignId === (campaign.id || campaign._id as string) ? null : (campaign.id || campaign._id as string))}>
+                    {expandedCampaignId === (campaign.id || campaign._id) ? "Hide Strategy" : "View Full Strategy"}
+                  </Button>
                   <Button variant="destructive" size="sm" onClick={() => handleDelete(campaign.id || campaign._id as string)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
-              <CardContent className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm text-muted-foreground uppercase">Strategy</h4>
-                  <p className="text-sm">{campaign.strategy}</p>
+              <CardContent className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-sm text-muted-foreground uppercase">Strategy</h4>
+                    <p className="text-sm">{campaign.strategy}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-sm text-muted-foreground uppercase">Content</h4>
+                    <ul className="text-sm list-disc pl-4 space-y-1">
+                      {campaign.suggestedPosts.slice(0,2).map((p,i) => <li key={i}>{p}</li>)}
+                    </ul>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Ad Copy</h4>
+                      <Button 
+                        variant="secondary" 
+                        size="sm" 
+                        className="h-6 text-[10px] px-2 rounded font-medium flex items-center gap-1"
+                        onClick={() => handleGenerateAdCopy(campaign)}
+                        disabled={generatingAdCopyId === (campaign.id || campaign._id)}
+                      >
+                        {generatingAdCopyId === (campaign.id || campaign._id) ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <Sparkles className="h-3 w-3" />
+                        )}
+                        Generate with Groq AI
+                      </Button>
+                    </div>
+                    <p className="text-sm text-muted-foreground italic">"{campaign.adCopy}"</p>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm text-muted-foreground uppercase">Content</h4>
-                  <ul className="text-sm list-disc pl-4 space-y-1">
-                    {campaign.suggestedPosts.slice(0,2).map((p,i) => <li key={i}>{p}</li>)}
-                  </ul>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm text-muted-foreground uppercase">Ad Copy</h4>
-                  <p className="text-sm text-muted-foreground italic">"{campaign.adCopy}"</p>
-                </div>
+                
+                {expandedCampaignId === (campaign.id || campaign._id) && (
+                  <div className="mt-6 pt-6 border-t border-border grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-2">
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Target Audience & Platforms</h4>
+                      <p className="text-sm"><span className="font-medium text-foreground">Audience:</span> {campaign.targetAudience}</p>
+                      <p className="text-sm"><span className="font-medium text-foreground">Platforms:</span> {campaign.platforms.join(', ')}</p>
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Budget & Schedule</h4>
+                      <p className="text-sm"><span className="font-medium text-foreground">Budget:</span> {campaign.budget}</p>
+                      <p className="text-sm"><span className="font-medium text-foreground">Posting:</span> {campaign.postingSchedule}</p>
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Full Content Strategy</h4>
+                      <p className="text-sm">{campaign.contentStrategy}</p>
+                    </div>
+                    {campaign.suggestedPosts.length > 0 && (
+                      <div className="space-y-2 md:col-span-2">
+                        <h4 className="font-semibold text-sm text-muted-foreground uppercase">All Suggested Posts</h4>
+                        <ul className="text-sm list-disc pl-4 space-y-1">
+                          {campaign.suggestedPosts.map((p,i) => <li key={i}>{p}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {campaign.suggestedReels && campaign.suggestedReels.length > 0 && (
+                      <div className="space-y-2 md:col-span-2">
+                        <h4 className="font-semibold text-sm text-muted-foreground uppercase">Suggested Reels</h4>
+                        <ul className="text-sm list-disc pl-4 space-y-1">
+                          {campaign.suggestedReels.map((r,i) => <li key={i}>{r}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    <div className="space-y-2 md:col-span-2">
+                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Call to Action</h4>
+                      <Button variant="outline" className="text-primary-600 bg-primary-50 border-primary-200 hover:bg-primary-100 hover:text-primary-700" asChild>
+                        <Link href="/content">
+                          {campaign.callToAction}
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}

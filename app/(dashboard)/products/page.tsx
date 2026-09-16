@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Package, Search, Plus, Edit, Trash2, X, Sparkles, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { getProducts, createProduct, deleteProduct } from "@/services/product.service";
+import { getProducts, createProduct, updateProduct, deleteProduct } from "@/services/product.service";
 import { Product, ProductCreate } from "@/types/product";
 
 
@@ -18,6 +18,7 @@ export default function ProductsPage() {
   const [saving, setSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
 
   // Add-form state
   const [newProduct, setNewProduct] = useState<ProductCreate>({
@@ -61,15 +62,35 @@ export default function ProductsPage() {
     if (!newProduct.name || newProduct.price <= 0) return;
     try {
       setSaving(true);
-      const created = await createProduct(newProduct);
-      setProducts((prev) => [created, ...prev]);
+      if (editingProductId) {
+        await updateProduct(editingProductId, newProduct);
+        await loadProducts(); // Reload to get updates
+      } else {
+        const created = await createProduct(newProduct);
+        setProducts((prev) => [created, ...prev]);
+      }
       setIsAddingProduct(false);
+      setEditingProductId(null);
       setNewProduct({ name: "", price: 0, stock: 0, sizes: [], colors: [], description: "" });
     } catch (error) {
-      console.error("Failed to create product", error);
+      console.error("Failed to save product", error);
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleEditClick = (product: Product) => {
+    setEditingProductId(product.id);
+    setNewProduct({
+      name: product.name,
+      price: product.price,
+      stock: product.stock,
+      sizes: product.sizes || [],
+      colors: product.colors || [],
+      description: product.description || "",
+      sale_price: product.sale_price,
+    });
+    setIsAddingProduct(true);
   };
 
   const getStockStatus = (stock: number) => {
@@ -216,12 +237,12 @@ export default function ProductsPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right space-x-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted" asChild>
-                          <Link href={`/content?productId=${product.id}`} title="Generate AI Content">
+                        <Link href={`/content?productId=${product.id}`} title="Generate AI Content" passHref>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
                             <Sparkles className="h-4 w-4 text-indigo-500" />
-                          </Link>
-                        </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                          </Button>
+                        </Link>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted" onClick={() => handleEditClick(product)}>
                           <Edit className="h-4 w-4 text-muted-foreground" />
                         </Button>
                         <Button
