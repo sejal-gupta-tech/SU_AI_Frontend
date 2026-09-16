@@ -104,16 +104,20 @@ export default function DashboardPage() {
             </Link>
           </Button>
 
-          <Button variant="outline" className="h-24 flex flex-col gap-2 relative opacity-70" disabled>
-            <Camera className="h-6 w-6 text-muted-foreground" />
-            <span className="font-semibold">AI Photoshoot</span>
-            <span className="absolute top-2 right-2 text-[10px] bg-secondary px-2 py-1 rounded-full font-medium">Coming Soon</span>
+          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group hover:border-amber-500 hover:bg-amber-50" asChild>
+            <Link href="/ai-photoshoot">
+              <Camera className="h-6 w-6 text-amber-600" />
+              <span className="font-semibold text-amber-900">AI Photoshoot</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            </Link>
           </Button>
 
-          <Button variant="outline" className="h-24 flex flex-col gap-2 relative opacity-70" disabled>
-            <Megaphone className="h-6 w-6 text-muted-foreground" />
-            <span className="font-semibold">Create Ad</span>
-            <span className="absolute top-2 right-2 text-[10px] bg-secondary px-2 py-1 rounded-full font-medium">Coming Soon</span>
+          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group hover:border-emerald-500 hover:bg-emerald-50" asChild>
+            <Link href="/create-ad">
+              <Megaphone className="h-6 w-6 text-emerald-600" />
+              <span className="font-semibold text-emerald-900">Create Ad</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            </Link>
           </Button>
         </div>
       </div>
