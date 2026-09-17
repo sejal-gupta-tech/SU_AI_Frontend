@@ -11,6 +11,7 @@ const navigation = [
   { name: "Business", href: "/business", icon: Store },
   { name: "Brand Kit", href: "/brand", icon: Palette },
   { name: "Products", href: "/products", icon: Package },
+  { name: "Create Reel", href: "/create/reel", icon: Sparkles },
   { name: "AI Content", href: "/content", icon: Sparkles },
   { name: "Content Library", href: "/content-library", icon: Library },
   { name: "Campaigns", href: "/campaigns", icon: Megaphone },
