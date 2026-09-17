@@ -65,7 +65,7 @@ export function ReelGenerationProgress({ jobId, onComplete, onError }: ReelGener
   if (status.status === "completed") currentStageIndex = 5;
 
   return (
-    <div className="rounded-3xl border border-white/60 bg-white/70 backdrop-blur-xl p-8 space-y-8 shadow-2xl shadow-indigo-100/50">
+    <div className="rounded-3xl border border-gray-200 bg-white p-8 space-y-8 shadow-xl">
       <div className="flex items-center gap-3 mb-2">
         <div className="relative flex h-4 w-4">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>

@@ -97,7 +97,7 @@ export default function DashboardPage() {
           </Button>
           
           <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group hover:border-indigo-500 hover:bg-indigo-50" asChild>
-            <Link href="/content?type=reel">
+            <Link href="/create/reel">
               <Video className="h-6 w-6 text-indigo-600" />
               <span className="font-semibold text-indigo-900">Create Reel</span>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />

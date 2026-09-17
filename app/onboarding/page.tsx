@@ -31,7 +31,7 @@ export default function OnboardingPage() {
   });
   const router = useRouter();
 
-  const handleNext = async () => {
+  const handleNext = async (e: any) => { if(e) e.preventDefault();
     if (currentStep < steps.length - 2) {
       setCurrentStep(prev => prev + 1);
     } else if (currentStep === steps.length - 2) {
@@ -194,15 +194,14 @@ export default function OnboardingPage() {
           )}
 
           <div className="flex items-center justify-between mt-12 pt-6 border-t border-border">
-            <Button 
-              variant="outline" 
+            <Button type="button" variant="outline" 
               onClick={handleBack} 
               disabled={currentStep === 0 || isSubmitting}
               className={currentStep === 0 ? "opacity-0 pointer-events-none" : ""}
             >
               <ArrowLeft className="w-4 h-4 mr-2" /> Back
             </Button>
-            <Button onClick={handleNext} disabled={isSubmitting} className="min-w-[120px]">
+            <Button type="button" onClick={handleNext} disabled={isSubmitting} className="min-w-[120px]">
               {isSubmitting ? "Submitting..." : currentStep === steps.length - 1 ? "Go to Dashboard" : "Continue"} 
               {!isSubmitting && currentStep < steps.length - 1 && <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
@@ -212,3 +211,5 @@ export default function OnboardingPage() {
     </div>
   );
 }
+
+

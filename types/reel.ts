@@ -1,4 +1,4 @@
-export interface GenerateReelRequest {
+﻿export interface GenerateReelRequest {
   product_id: string;
   objective: string;
   platform: string;
@@ -46,9 +46,12 @@ export interface ReelJobStatus {
   message?: string;
   video_url?: string;
   thumbnail_url?: string;
+  audio_url?: string;
   script?: ReelScript;
   caption?: string;
   hashtags?: string[];
+  product_name?: string;
+  product_description?: string;
 }
 
 export interface Reel {
@@ -68,6 +71,7 @@ export interface Reel {
   voice_url?: string;
   video_url?: string;
   thumbnail_url?: string;
+  audio_url?: string;
   
   status: string;
   job_id?: string;
@@ -79,3 +83,5 @@ export interface Reel {
   created_at: string;
   updated_at: string;
 }
+
+
