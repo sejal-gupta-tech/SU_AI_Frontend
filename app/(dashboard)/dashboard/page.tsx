@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, MessageSquare, Star, Megaphone, Image as ImageIcon, Video, Camera, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { insightsService } from "@/services/insights.service";
+import { getDashboardInsights } from "@/services/insights.service";
 import { Insight } from "@/types/insights";
 import { AIInsights } from "@/components/ai/AIInsights";
 
@@ -17,7 +17,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchInsights = async () => {
       try {
-        const res = await insightsService.getInsights();
+        const res = await getDashboardInsights();
         setInsights(res.data);
       } catch (err) {
         console.error("Failed to load insights", err);
@@ -58,27 +58,31 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Customer Messages</CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground mt-1">2 require your attention</p>
-          </CardContent>
-        </Card>
+        <Link href="/messages" className="block">
+          <Card className="h-full hover:border-primary-500/50 transition-colors">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Customer Messages</CardTitle>
+              <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">3</div>
+              <p className="text-xs text-muted-foreground mt-1">2 require your attention</p>
+            </CardContent>
+          </Card>
+        </Link>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Google Reviews</CardTitle>
-            <Star className="h-4 w-4 text-amber-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">2</div>
-            <p className="text-xs text-muted-foreground mt-1">AI replies drafted</p>
-          </CardContent>
-        </Card>
+        <Link href="/reviews" className="block">
+          <Card className="h-full hover:border-amber-500/50 transition-colors">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Google Reviews</CardTitle>
+              <Star className="h-4 w-4 text-amber-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">2</div>
+              <p className="text-xs text-muted-foreground mt-1">AI replies drafted</p>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       <div className="space-y-4">
@@ -100,16 +104,20 @@ export default function DashboardPage() {
             </Link>
           </Button>
 
-          <Button variant="outline" className="h-24 flex flex-col gap-2 relative opacity-70" disabled>
-            <Camera className="h-6 w-6 text-muted-foreground" />
-            <span className="font-semibold">AI Photoshoot</span>
-            <span className="absolute top-2 right-2 text-[10px] bg-secondary px-2 py-1 rounded-full font-medium">Coming Soon</span>
+          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group hover:border-amber-500 hover:bg-amber-50" asChild>
+            <Link href="/ai-photoshoot">
+              <Camera className="h-6 w-6 text-amber-600" />
+              <span className="font-semibold text-amber-900">AI Photoshoot</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            </Link>
           </Button>
 
-          <Button variant="outline" className="h-24 flex flex-col gap-2 relative opacity-70" disabled>
-            <Megaphone className="h-6 w-6 text-muted-foreground" />
-            <span className="font-semibold">Create Ad</span>
-            <span className="absolute top-2 right-2 text-[10px] bg-secondary px-2 py-1 rounded-full font-medium">Coming Soon</span>
+          <Button variant="outline" className="h-24 flex flex-col gap-2 relative overflow-hidden group hover:border-emerald-500 hover:bg-emerald-50" asChild>
+            <Link href="/create-ad">
+              <Megaphone className="h-6 w-6 text-emerald-600" />
+              <span className="font-semibold text-emerald-900">Create Ad</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            </Link>
           </Button>
         </div>
       </div>

@@ -81,7 +81,9 @@ export function ContentCard({ content, onView, onEdit, onDelete }: ContentCardPr
       <CardFooter className="p-4 pt-0 text-xs text-muted-foreground flex justify-between items-center border-t border-border/50 mt-auto pt-3">
         <span className="flex items-center">
           <Calendar className="h-3 w-3 mr-1" />
-          {formatDistanceToNow(new Date(content.updatedAt), { addSuffix: true })}
+          {(content.updatedAt && !isNaN(new Date(content.updatedAt).getTime())) 
+            ? formatDistanceToNow(new Date(content.updatedAt), { addSuffix: true }) 
+            : 'Recently'}
         </span>
         <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => onView?.(content)}>
           Preview

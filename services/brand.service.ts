@@ -53,7 +53,12 @@ export const uploadBrandLogo = async (
         ApiResponse<{ logo_url: string }>
     >(
         "/api/brand/upload-logo",
-        formData
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        }
     );
 
     return response.data.data.logo_url;
