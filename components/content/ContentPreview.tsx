@@ -60,6 +60,13 @@ export function ContentPreview({ content, onRegenerate, onSave }: ContentPreview
       </CardHeader>
       
       <CardContent className="pt-6 space-y-6">
+        {/* Added Graphic Display */}
+        {(editedContent as any).media_url && (
+          <div className="mb-6 rounded-lg overflow-hidden border border-border shadow-sm flex justify-center bg-muted/10">
+            <img src={(editedContent as any).media_url} alt="Generated Graphic" className="w-full max-w-md h-auto object-contain" />
+          </div>
+        )}
+
         <div className="space-y-2">
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Headline / Title</h3>
           {isEditing ? (
