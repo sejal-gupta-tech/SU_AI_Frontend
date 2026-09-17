@@ -52,7 +52,7 @@ export const contentService = {
   },
   
   async updateContent(id: string, updates: Partial<GeneratedContent>): Promise<{ data: GeneratedContent }> {
-    const response = await api.post("/api/v1/content/save", { ...updates, _id: id });
+    const response = await api.put("/api/v1/content/update", { ...updates, _id: id });
     return { data: response.data.data };
   },
   
