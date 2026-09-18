@@ -9,7 +9,7 @@ export async function generatePhotoshoot(
 ): Promise<PhotoshootResponse> {
 
   const response = await api.post(
-    "/api/v1/ai/photoshoot/",
+    "/api/v1/ai/photoshoot",
     data
   );
 

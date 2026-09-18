@@ -37,13 +37,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Protect routes
     if (!isLoading) {
-      const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/signup');
+      const isAuthRoute = pathname === '/login' || pathname === '/signup';
+      const isAdminLoginRoute = pathname === '/admin/login';
       const isProtectedRoute = ['/dashboard', '/business', '/brand', '/products', '/settings', '/onboarding'].some(route => pathname.startsWith(route));
+      const isAdminRoute = pathname.startsWith('/admin') && !isAdminLoginRoute;
 
-      if (!user && isProtectedRoute) {
-        router.push('/login');
-      } else if (user && isAuthRoute) {
-        router.push('/dashboard');
+      if (!user) {
+        if (isProtectedRoute) {
+          router.push('/login');
+        } else if (isAdminRoute) {
+          router.push('/admin/login');
+        }
+      } else {
+        if (isAdminRoute && user.role !== 'admin') {
+          router.push('/dashboard');
+        } else if (isProtectedRoute && user.role === 'admin') {
+          router.push('/admin');
+        } else if (isAuthRoute || isAdminLoginRoute) {
+          router.push(user.role === 'admin' ? '/admin' : '/dashboard');
+        }
       }
     }
   }, [user, isLoading, pathname, router]);
@@ -52,14 +64,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('access_token', token);
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
-    router.push('/dashboard');
+    
+    if (userData.role === 'admin') {
+      router.push('/admin');
+    } else {
+      router.push('/dashboard');
+    }
   };
 
   const logout = () => {
+    const wasAdmin = user?.role === 'admin';
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     setUser(null);
-    router.push('/login');
+    router.push(wasAdmin ? '/admin/login' : '/login');
   };
 
   return (

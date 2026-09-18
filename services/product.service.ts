@@ -15,7 +15,7 @@ interface ApiResponse<T> {
 export const getProducts = async (): Promise<Product[]> => {
     const response = await api.get<
         ApiResponse<Product[]>
-    >("/api/products");
+    >("/api/v1/products");
 
     return response.data.data;
 };
@@ -25,7 +25,7 @@ export const getProduct = async (
 ): Promise<Product> => {
     const response = await api.get<
         ApiResponse<Product>
-    >(`/api/products/${productId}`);
+    >(`/api/v1/products/${productId}`);
 
     return response.data.data;
 };
@@ -35,7 +35,7 @@ export const createProduct = async (
 ): Promise<Product> => {
     const response = await api.post<
         ApiResponse<Product>
-    >("/api/products", data);
+    >("/api/v1/products", data);
 
     return response.data.data;
 };
@@ -47,7 +47,7 @@ export const updateProduct = async (
     const response = await api.put<
         ApiResponse<Product>
     >(
-        `/api/products/${productId}`,
+        `/api/v1/products/${productId}`,
         data
     );
 
@@ -58,7 +58,7 @@ export const deleteProduct = async (
     productId: string
 ) => {
     const response = await api.delete(
-        `/api/products/${productId}`
+        `/api/v1/products/${productId}`
     );
 
     return response.data;
@@ -74,7 +74,7 @@ export const uploadProductImage = async (
     const response = await api.post<
         ApiResponse<{ image_url: string }>
     >(
-        "/api/products/upload-image",
+        "/api/v1/products/upload-image",
         formData
     );
 

@@ -4,6 +4,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  role: string;
 }
 
 export interface Business {
@@ -13,10 +14,10 @@ export interface Business {
   instagram?: string;
   category: string;
   location: string;
-  targetCustomer?: string;
-  preferredLanguage?: string;
-  contactEmail?: string;
-  contactPhone?: string;
+  target_customer?: string;
+  preferred_language?: string;
+  contact_email?: string;
+  contact_phone?: string;
   description?: string;
 }
 
