@@ -25,7 +25,7 @@ export default function WhatsAppIntegrationPage() {
   const handleUpdate = async () => {
     setIsUpdating(true);
     try {
-      await api.put('/api/v1/business', {
+      await api.put('/api/v1/businesses/me', {
         whatsapp_phone_id: waPhoneId,
         whatsapp_token: waToken
       });
