@@ -15,7 +15,7 @@ interface ContentCardProps {
 
 export function ContentCard({ content, onView, onEdit, onDelete }: ContentCardProps) {
   const PlatformIcon = () => {
-    switch (content.platform.toLowerCase()) {
+    switch (content.platform?.toLowerCase() || '') {
       case 'instagram': return <Camera className="h-4 w-4 text-pink-600" />;
       case 'facebook': return <Users className="h-4 w-4 text-blue-600" />;
       case 'linkedin': return <Briefcase className="h-4 w-4 text-blue-800" />;
@@ -69,11 +69,11 @@ export function ContentCard({ content, onView, onEdit, onDelete }: ContentCardPr
         <CardTitle className="text-base leading-tight mb-2 line-clamp-2">{content.title}</CardTitle>
         <p className="text-sm text-muted-foreground line-clamp-3 mb-3">{content.caption}</p>
         <div className="flex flex-wrap gap-1 mt-auto">
-          {content.hashtags.slice(0, 3).map((tag, i) => (
+          {(content.hashtags || []).slice(0, 3).map((tag, i) => (
             <span key={i} className="text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">{tag}</span>
           ))}
-          {content.hashtags.length > 3 && (
-            <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">+{content.hashtags.length - 3}</span>
+          {(content.hashtags?.length || 0) > 3 && (
+            <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">+{(content.hashtags?.length || 0) - 3}</span>
           )}
         </div>
       </CardContent>

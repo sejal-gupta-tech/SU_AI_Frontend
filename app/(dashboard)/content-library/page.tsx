@@ -59,9 +59,9 @@ export default function ContentLibraryPage() {
     if (filter === 'Drafts' || filter === 'Scheduled' || filter === 'Published') {
       return c.status === filter;
     }
-    if (filter === 'Posts') return c.type.includes('Post') || c.type.includes('Caption');
-    if (filter === 'Reels') return c.type.includes('Reel');
-    if (filter === 'Ads') return c.type.includes('Ad');
+    if (filter === 'Posts') return c.type?.includes('Post') || c.type?.includes('Caption');
+    if (filter === 'Reels') return c.type?.includes('Reel');
+    if (filter === 'Ads') return c.type?.includes('Ad');
     return true;
   });
 

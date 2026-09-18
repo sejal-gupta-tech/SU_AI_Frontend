@@ -31,7 +31,8 @@ export default function ReviewsPage() {
   const handleGenerateReply = async (reviewId: string) => {
     setGeneratingFor(reviewId);
     try {
-      const res = await reviewsService.generateReply(reviewId);
+      const review = reviews.find(r => r._id === reviewId);
+      const res = await reviewsService.generateReply(reviewId, review?.reviewText);
       setAiReplies({ ...aiReplies, [reviewId]: res.data });
     } catch (error) {
       console.error(error);
@@ -45,8 +46,8 @@ export default function ReviewsPage() {
     if (!replyText) return;
     
     try {
-      const res = await reviewsService.sendReply(reviewId, replyText);
-      setReviews(reviews.map(r => r._id === reviewId ? res.data : r));
+      await reviewsService.sendReply(reviewId, replyText);
+      setReviews(reviews.map(r => r._id === reviewId ? { ...r, status: 'Replied', reply: replyText } : r));
       const newReplies = { ...aiReplies };
       delete newReplies[reviewId];
       setAiReplies(newReplies);

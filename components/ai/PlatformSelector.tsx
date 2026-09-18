@@ -1,9 +1,13 @@
-"use client";
+﻿"use client";
 
 const platforms = [
   {
     id: "instagram",
-    name: "Instagram",
+    name: "Instagram Post",
+  },
+  {
+    id: "instagram_story",
+    name: "Instagram Story",
   },
   {
     id: "facebook",
@@ -11,11 +15,19 @@ const platforms = [
   },
   {
     id: "whatsapp",
-    name: "WhatsApp",
+    name: "WhatsApp Status",
+  },
+  {
+    id: "google_business",
+    name: "Google Business Post",
   },
   {
     id: "linkedin",
     name: "LinkedIn",
+  },
+  {
+    id: "advertisement",
+    name: "Advertisement",
   },
 ];
 
@@ -55,3 +67,4 @@ export default function PlatformSelector({
     </div>
   );
 }
+

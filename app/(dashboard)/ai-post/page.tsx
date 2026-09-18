@@ -169,6 +169,7 @@ export default function AIPostPage() {
           {generatedPost && (
             <GeneratedPostCard
               post={generatedPost}
+              imageUrl={products.find(p => p.id === productId)?.image_url}
             />
           )}
 
