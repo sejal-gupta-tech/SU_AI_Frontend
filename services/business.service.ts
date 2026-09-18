@@ -30,7 +30,7 @@ export interface BusinessUpdateRequest {
 export const businessService = {
   createBusiness: async (data: BusinessCreateRequest): Promise<Business> => {
     try {
-      const response = await api.post('/api/v1/businesses/', data);
+      const response = await api.post('/api/v1/businesses', data);
       return response.data;
     } catch (error: any) {
       if (error.response?.data?.detail) {

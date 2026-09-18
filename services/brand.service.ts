@@ -14,7 +14,7 @@ interface ApiResponse<T> {
 
 export const getBrandKit = async (): Promise<BrandKit> => {
     const response = await api.get<ApiResponse<BrandKit>>(
-        "/api/brand"
+        "/api/v1/brands"
     );
 
     return response.data.data;
@@ -24,7 +24,7 @@ export const createBrandKit = async (
     data: BrandCreate
 ): Promise<BrandKit> => {
     const response = await api.post<ApiResponse<BrandKit>>(
-        "/api/brand",
+        "/api/v1/brands",
         data
     );
 
@@ -35,7 +35,7 @@ export const updateBrandKit = async (
     data: BrandUpdate
 ): Promise<BrandKit> => {
     const response = await api.put<ApiResponse<BrandKit>>(
-        "/api/brand",
+        "/api/v1/brands",
         data
     );
 
@@ -52,7 +52,7 @@ export const uploadBrandLogo = async (
     const response = await api.post<
         ApiResponse<{ logo_url: string }>
     >(
-        "/api/brand/upload-logo",
+        "/api/v1/brands/upload-logo",
         formData,
         {
             headers: {
