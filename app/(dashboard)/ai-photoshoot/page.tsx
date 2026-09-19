@@ -5,6 +5,7 @@ import ProductImageUpload from "@/components/ai-photoshoot/ProductImageUpload";
 import StyleSelector from "@/components/ai-photoshoot/StyleSelector";
 import { usePhotoshoot } from "@/hooks/usePhotoshoot";
 import { getProducts } from "@/services/product.service";
+import { InsufficientCreditsAlert } from "@/components/ui/InsufficientCreditsAlert";
 
 export default function AIPhotoshootPage() {
 
@@ -20,7 +21,9 @@ export default function AIPhotoshootPage() {
   const [environment, setEnvironment] = useState("Real-life environment");
   const [instruction, setInstruction] = useState("");
 
-  const { generate, loading, result, error } = usePhotoshoot();
+  const { generate, loading, result, error, rawError } = usePhotoshoot();
+
+  const hasInsufficientCredits = rawError?.response?.status === 402 || rawError?.message?.toLowerCase().includes("credit");
 
   useEffect(() => {
     getProducts().then((products) => {
@@ -75,6 +78,8 @@ export default function AIPhotoshootPage() {
         <h1 className="text-3xl font-bold text-white">AI Photoshoot</h1>
         <p className="mt-2 text-text-muted">Turn your product into professional marketing visuals.</p>
       </div>
+
+      {hasInsufficientCredits && <InsufficientCreditsAlert />}
 
       <div className="space-y-8 rounded-2xl border border-border bg-surface p-6 shadow-lg">
         <ProductImageUpload
@@ -154,7 +159,7 @@ export default function AIPhotoshootPage() {
           {loading ? "Generating..." : "Generate Photoshoot"}
         </button>
 
-        {error && <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-4 text-red-400">{error}</div>}
+        {error && !hasInsufficientCredits && <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-4 text-red-400">{error}</div>}
 
         {result && (
           <div className="mt-8">

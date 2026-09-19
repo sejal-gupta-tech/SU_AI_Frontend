@@ -59,15 +59,15 @@ export function ReelMakerForm({ onGenerate, isLoading }: ReelMakerFormProps) {
     });
   };
 
-  const selectCls = "w-full rounded-xl border border-gray-200 bg-white p-3 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium text-gray-800 text-sm cursor-pointer";
-  const labelCls = "mb-1.5 block text-xs font-bold text-gray-500 uppercase tracking-wider";
+  const selectCls = "w-full rounded-xl border border-border bg-[#0a142c] p-3 focus:border-brand-purple focus:outline-none focus:ring-2 focus:ring-brand-purple/20 transition-all font-medium text-white text-sm cursor-pointer";
+  const labelCls = "mb-1.5 block text-xs font-bold text-text-muted uppercase tracking-wider";
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <div className="rounded-2xl border border-border bg-surface shadow-sm">
       {/* Form header */}
-      <div className="px-6 py-5 border-b border-gray-100">
-        <h2 className="text-lg font-bold text-gray-900">Reel Configuration</h2>
-        <p className="text-sm text-gray-500 mt-0.5">Fill in the details to generate your AI reel</p>
+      <div className="px-6 py-5 border-b border-border">
+        <h2 className="text-lg font-bold text-white">Reel Configuration</h2>
+        <p className="text-sm text-text-muted mt-0.5">Fill in the details to generate your AI reel</p>
       </div>
 
       <div className="p-6 space-y-5">
@@ -153,8 +153,8 @@ export function ReelMakerForm({ onGenerate, isLoading }: ReelMakerFormProps) {
                 onClick={() => setObjective(value)}
                 className={`rounded-xl border px-3 py-2.5 text-sm font-semibold text-left transition-all cursor-pointer ${
                   objective === value
-                    ? "border-indigo-500 bg-indigo-50 text-indigo-700 shadow-sm"
-                    : "border-gray-200 bg-white text-gray-600 hover:border-indigo-300 hover:bg-indigo-50/50"
+                    ? "border-brand-purple bg-brand-purple/20 text-brand-purple shadow-sm"
+                    : "border-border bg-[#0a142c] text-text-muted hover:border-brand-purple/50 hover:bg-brand-purple/10"
                 }`}
               >
                 {label}
@@ -170,7 +170,7 @@ export function ReelMakerForm({ onGenerate, isLoading }: ReelMakerFormProps) {
             value={offer}
             onChange={(e) => setOffer(e.target.value)}
             placeholder="e.g. 50% Off this weekend"
-            className="w-full rounded-xl border border-gray-200 bg-white p-3 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium text-gray-800 text-sm"
+            className="w-full rounded-xl border border-border bg-[#0a142c] p-3 focus:border-brand-purple focus:outline-none focus:ring-2 focus:ring-brand-purple/20 transition-all font-medium text-white text-sm placeholder:text-text-muted"
           />
         </div>
 
@@ -182,7 +182,7 @@ export function ReelMakerForm({ onGenerate, isLoading }: ReelMakerFormProps) {
             onChange={(e) => setInstruction(e.target.value)}
             placeholder="Any specific requests for the video?"
             rows={3}
-            className="w-full rounded-xl border border-gray-200 bg-white p-3 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium text-gray-800 text-sm resize-none"
+            className="w-full rounded-xl border border-border bg-[#0a142c] p-3 focus:border-brand-purple focus:outline-none focus:ring-2 focus:ring-brand-purple/20 transition-all font-medium text-white text-sm resize-none placeholder:text-text-muted"
           />
         </div>
       </div>
@@ -193,7 +193,7 @@ export function ReelMakerForm({ onGenerate, isLoading }: ReelMakerFormProps) {
           type="button"
           disabled={isLoading || !productId}
           onClick={handleGenerate}
-          className="w-full rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 font-bold text-white shadow-lg shadow-indigo-200 hover:from-indigo-700 hover:to-purple-700 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full rounded-2xl bg-brand-gradient px-6 py-4 font-bold text-white shadow-lg shadow-purple-500/20 hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
         >
           {isLoading ? (
             <>
@@ -217,4 +217,3 @@ export function ReelMakerForm({ onGenerate, isLoading }: ReelMakerFormProps) {
     </div>
   );
 }
-

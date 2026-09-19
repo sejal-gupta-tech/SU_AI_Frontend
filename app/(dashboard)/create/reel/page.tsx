@@ -7,6 +7,7 @@ import { ReelResult } from "@/components/reel/ReelResult";
 import { reelService } from "@/services/reel.service";
 import { GenerateReelRequest, ReelJobStatus } from "@/types/reel";
 import { Sparkles, Video } from "lucide-react";
+import { InsufficientCreditsAlert } from "@/components/ui/InsufficientCreditsAlert";
 
 type PageState = "form" | "generating" | "result";
 
@@ -16,10 +17,12 @@ export default function CreateReelPage() {
   const [completedResult, setCompletedResult] = useState<ReelJobStatus | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasInsufficientCredits, setHasInsufficientCredits] = useState(false);
 
   const handleGenerate = async (request: GenerateReelRequest) => {
     setIsLoading(true);
     setError(null);
+    setHasInsufficientCredits(false);
     try {
       const response = await reelService.generateReel(request);
       if (response.success && response.job_id) {
@@ -29,7 +32,11 @@ export default function CreateReelPage() {
         setError(response.message || "Failed to start generation job.");
       }
     } catch (err: any) {
-      setError(err?.response?.data?.detail || err.message || "An error occurred while connecting to the API.");
+      if (err?.response?.status === 402 || err?.message?.toLowerCase().includes("credit")) {
+        setHasInsufficientCredits(true);
+      } else {
+        setError(err?.response?.data?.detail || err.message || "An error occurred while connecting to the API.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -39,6 +46,7 @@ export default function CreateReelPage() {
     setActiveJobId(null);
     setCompletedResult(status);
     setPageState("result");
+    window.dispatchEvent(new Event("credit-update"));
   }, []);
 
   const handleJobError = useCallback((errMsg: string) => {
@@ -51,6 +59,7 @@ export default function CreateReelPage() {
     setActiveJobId(null);
     setCompletedResult(null);
     setError(null);
+    setHasInsufficientCredits(false);
     setPageState("form");
   };
 
@@ -71,6 +80,8 @@ export default function CreateReelPage() {
           </p>
         </div>
       </div>
+
+      {hasInsufficientCredits && <InsufficientCreditsAlert />}
 
       {/* Error Banner */}
       {error && (

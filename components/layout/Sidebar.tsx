@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LayoutDashboard, Store, Palette, Package, Settings, LogOut, Sparkles, Megaphone, MessageSquare, Star, Library, Share2, ChevronDown, ChevronRight, Globe } from "lucide-react";
+import { LayoutDashboard, Store, Palette, Package, Settings, LogOut, Sparkles, Megaphone, MessageSquare, Star, Library, Share2, ChevronDown, ChevronRight, Globe, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { Logo } from "@/components/ui/Logo";
+import { CreditIndicator } from "@/components/layout/CreditIndicator";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="#25D366" className={className}>
@@ -43,6 +44,7 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Analytics", href: "/analytics", icon: TrendingUp },
   { name: "Business", href: "/business", icon: Store },
   { name: "Brand Kit", href: "/brand", icon: Palette },
   { name: "Products", href: "/products", icon: Package },
@@ -53,6 +55,7 @@ const navigation = [
       { name: "Create Ad", href: "/create-ad" },
       { name: "Create Reel", href: "/create/reel" },
       { name: "AI Post Maker", href: "/ai-post" },
+      { name: "AI Image Generator", href: "/ai-image" },
       { name: "AI Photoshoot", href: "/ai-photoshoot" },
       { name: "AI Calendar", href: "/ai-calendar" },
     ]
@@ -80,7 +83,7 @@ export function Sidebar() {
   const { logout } = useAuth();
   
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({
-    "Social Media": ["/create-ad", "/create/reel", "/ai-post", "/ai-photoshoot", "/ai-calendar"].some(p => pathname.startsWith(p)),
+    "Social Media": ["/create-ad", "/create/reel", "/ai-post", "/ai-image", "/ai-photoshoot", "/ai-calendar"].some(p => pathname.startsWith(p)),
     "Social Platforms": ["/social-platforms"].some(p => pathname.startsWith(p))
   });
 
@@ -188,6 +191,7 @@ export function Sidebar() {
         })}
       </nav>
       <div className="p-4 border-t border-border">
+        <CreditIndicator />
         <button
           onClick={logout}
           className="group flex w-full items-center px-3 py-2 text-sm font-medium rounded-md text-text-muted hover:bg-red-500/10 hover:text-red-500 transition-colors"

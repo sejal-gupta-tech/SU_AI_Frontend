@@ -10,6 +10,7 @@ export function usePhotoshoot() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [rawError, setRawError] = useState<any>(null);
 
   const generate = async (data: any) => {
 
@@ -21,6 +22,7 @@ export function usePhotoshoot() {
       const response = await generatePhotoshoot(data);
 
       setResult(response);
+      window.dispatchEvent(new Event("credit-update"));
 
       return response;
 
@@ -30,6 +32,7 @@ export function usePhotoshoot() {
         error?.response?.data?.detail ||
         "Failed to generate photoshoot"
       );
+      setRawError(error);
 
     } finally {
 
@@ -43,5 +46,6 @@ export function usePhotoshoot() {
     loading,
     result,
     error,
+    rawError,
   };
 }

@@ -6,6 +6,7 @@ import ProductSelector from "@/components/ai/ProductSelector";
 import PlatformSelector from "@/components/ai/PlatformSelector";
 import ObjectiveSelector from "@/components/ai/ObjectiveSelector";
 import GeneratedPostCard from "@/components/ai/GeneratedPostCard";
+import { InsufficientCreditsAlert } from "@/components/ui/InsufficientCreditsAlert";
 
 import { generatePost } from "@/services/content.service";
 import { getProducts } from "@/services/product.service";
@@ -28,6 +29,8 @@ export default function AIPostPage() {
 
   const [generatedPost, setGeneratedPost] =
     useState<GeneratedPost | null>(null);
+
+  const [hasInsufficientCredits, setHasInsufficientCredits] = useState(false);
 
   useEffect(() => {
 
@@ -58,6 +61,7 @@ export default function AIPostPage() {
 
       setLoading(true);
       setGeneratedPost(null);
+      setHasInsufficientCredits(false);
 
       const result = await generatePost({
         product_id: productId,
@@ -67,17 +71,22 @@ export default function AIPostPage() {
       });
 
       setGeneratedPost(result);
+      window.dispatchEvent(new Event("credit-update"));
 
-    } catch (error) {
+    } catch (error: any) {
 
       console.error(
         "AI post generation failed:",
         error
       );
 
-      alert(
-        "Unable to generate post. Please try again."
-      );
+      if (error?.response?.status === 402 || error?.message?.toLowerCase().includes("credit")) {
+        setHasInsufficientCredits(true);
+      } else {
+        alert(
+          "Unable to generate post. Please try again."
+        );
+      }
 
     } finally {
 
@@ -103,6 +112,8 @@ export default function AIPostPage() {
           </p>
 
         </div>
+
+        {hasInsufficientCredits && <InsufficientCreditsAlert />}
 
         <div className="space-y-8">
 

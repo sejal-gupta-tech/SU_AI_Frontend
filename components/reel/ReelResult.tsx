@@ -57,21 +57,21 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
+      <div className="rounded-3xl border border-border bg-surface p-8 shadow-xl">
         <div className="flex items-center gap-3 mb-8">
-          <div className="p-2.5 bg-green-100 rounded-xl">
-            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="p-2.5 bg-green-500/20 rounded-xl">
+            <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Your Reel is Ready!</h2>
+          <h2 className="text-3xl font-extrabold text-white tracking-tight">Your Reel is Ready!</h2>
         </div>
 
         <div className="flex flex-col xl:flex-row gap-10">
           {/* Left: Video Player or Product Reel Card */}
           <div className="w-full xl:w-1/2 flex justify-center">
             {hasRealVideo ? (
-              <div className="w-full bg-black/5 rounded-3xl overflow-hidden shadow-inner border border-gray-100/50 p-2 relative group">
+              <div className="w-full bg-black/5 rounded-3xl overflow-hidden shadow-inner border border-border/50 p-2 relative group">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl" />
                 <video
                   src={result.video_url!}
@@ -87,7 +87,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
               /* Product Reel Preview Card â€” phone-shaped */
               <div className="relative w-[280px] flex-shrink-0" style={{ aspectRatio: "9/16" }}>
                 {/* Phone shell */}
-                <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-300/50 border-4 border-gray-900 cursor-pointer" onClick={openPreview}>
+                <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-brand-purple/20 border-4 border-gray-900 cursor-pointer" onClick={openPreview}>
                   {/* Product Image */}
                   {productImage ? (
                     <img
@@ -113,7 +113,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
 
                   {/* Product name badge top-left */}
                   <div className="absolute top-4 left-4">
-                    <span className="bg-white/20 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/30 max-w-[140px] truncate block">
+                    <span className="bg-surface/20 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/30 max-w-[140px] truncate block">
                       {productName}
                     </span>
                   </div>
@@ -121,7 +121,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                   {/* Hook text middle */}
                   {result.script?.hook && (
                     <div className="absolute left-4 right-4" style={{ top: "30%" }}>
-                      <div className="bg-white/10 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20">
+                      <div className="bg-surface/10 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20">
                         <p className="text-white text-sm font-bold text-center leading-snug drop-shadow">✨ {result.script.hook}</p>
                       </div>
                     </div>
@@ -134,7 +134,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                     className="absolute inset-0 flex items-center justify-center cursor-pointer group/play"
                     aria-label="Preview reel scenes"
                   >
-                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/40 animate-pulse group-hover/play:scale-110 group-hover/play:bg-white/40 transition-all duration-200">
+                    <div className="w-16 h-16 bg-surface/20 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/40 animate-pulse group-hover/play:scale-110 group-hover/play:bg-surface/40 transition-all duration-200">
                       <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
@@ -155,7 +155,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                 </div>
 
                 {/* Phone notch */}
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-5 bg-gray-900 rounded-full z-10" />
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-5 bg-[#0a142c] rounded-full z-10" />
               </div>
             )}
           </div>
@@ -166,35 +166,35 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
 
               {/* Product info */}
               {(result.product_name || result.product_description) && (
-                <div className="flex items-start gap-3 bg-indigo-50 rounded-2xl px-5 py-4 border border-indigo-100">
-                  <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-start gap-3 bg-brand-purple/10 rounded-2xl px-5 py-4 border border-brand-purple/20">
+                  <div className="w-10 h-10 rounded-xl bg-brand-purple/20 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-indigo-700">{result.product_name}</p>
+                    <p className="text-sm font-bold text-brand-purple">{result.product_name}</p>
                     {result.product_description && (
-                      <p className="text-xs text-indigo-500 mt-0.5 line-clamp-2">{result.product_description}</p>
+                      <p className="text-xs text-brand-purple mt-0.5 line-clamp-2">{result.product_description}</p>
                     )}
                   </div>
                 </div>
               )}
 
               {result.script && (
-                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-2xl border border-indigo-100/50 shadow-sm">
-                  <h3 className="text-xl font-extrabold text-gray-900 mb-3">{result.script.title}</h3>
+                <div className="bg-[#0a142c] p-6 rounded-2xl border border-brand-purple/20/50 shadow-sm">
+                  <h3 className="text-xl font-extrabold text-white mb-3">{result.script.title}</h3>
                   <div className="flex gap-3">
-                    <span className="text-3xl text-indigo-300 font-serif leading-none">"</span>
-                    <p className="text-lg text-gray-700 italic font-medium leading-relaxed">{result.script.hook}</p>
+                    <span className="text-3xl text-brand-purple/50 font-serif leading-none">"</span>
+                    <p className="text-lg text-text-muted italic font-medium leading-relaxed">{result.script.hook}</p>
                   </div>
                 </div>
               )}
 
               {result.caption && (
                 <div className="px-2">
-                  <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Suggested Caption</h4>
-                  <p className="text-gray-800 whitespace-pre-wrap leading-relaxed text-base bg-gray-50/50 p-4 rounded-xl border border-gray-100">{result.caption}</p>
+                  <h4 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-3">Suggested Caption</h4>
+                  <p className="text-white whitespace-pre-wrap leading-relaxed text-base bg-[#0a142c] p-4 rounded-xl border border-border">{result.caption}</p>
                 </div>
               )}
 
@@ -202,7 +202,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                 <div className="px-2">
                   <div className="flex flex-wrap gap-2.5">
                     {result.hashtags.map((tag) => (
-                      <span key={tag} className="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:shadow hover:border-indigo-200 transition-all cursor-default">
+                      <span key={tag} className="rounded-lg bg-surface border border-border px-3 py-1.5 text-sm font-semibold text-brand-purple shadow-sm hover:shadow hover:border-brand-purple/50 transition-all cursor-default">
                         {tag.startsWith('#') ? tag : `#${tag}`}
                       </span>
                     ))}
@@ -211,24 +211,24 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
               )}
 
               {!hasRealVideo && (
-                <div className="px-2 py-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-700 flex items-start gap-2">
+                <div className="px-2 py-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-sm text-amber-400 flex items-start gap-2">
                   <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>
-                    <strong>Script Generated!</strong> To produce a real MP4 video, add a video API key (Runway ML, Luma AI, etc.) in your backend <code className="bg-amber-100 px-1 rounded">.env</code>. The AI script, caption & hashtags above are fully ready to use.
+                    <strong>Script Generated!</strong> To produce a real MP4 video, add a video API key (Runway ML, Luma AI, etc.) in your backend <code className="bg-amber-500/20 px-1 rounded">.env</code>. The AI script, caption & hashtags above are fully ready to use.
                   </span>
                 </div>
               )}
             </div>
 
-            <div className="flex gap-4 mt-8 pt-6 border-t border-gray-100">
+            <div className="flex gap-4 mt-8 pt-6 border-t border-border">
               {hasRealVideo && (
                 <a
                   href={result.video_url!}
                   download
                   target="_blank"
-                  className="flex-1 flex justify-center items-center gap-2 rounded-2xl bg-gray-900 px-6 py-4 font-bold text-white hover:bg-black transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-gray-900/20"
+                  className="flex-1 flex justify-center items-center gap-2 rounded-2xl bg-[#0a142c] px-6 py-4 font-bold text-white hover:bg-black transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-black/20"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -239,7 +239,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
               <button
                 type="button"
                 onClick={onReset}
-                className="flex-1 flex justify-center items-center gap-2 rounded-2xl border-2 border-gray-200 bg-white px-6 py-4 font-bold text-gray-700 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 transition-all active:scale-[0.98] cursor-pointer"
+                className="flex-1 flex justify-center items-center gap-2 rounded-2xl border-2 border-border bg-surface px-6 py-4 font-bold text-text-muted hover:border-brand-purple/50 hover:bg-brand-purple/10 hover:text-brand-purple transition-all active:scale-[0.98] cursor-pointer"
               >
                 Create Another
               </button>
@@ -250,9 +250,9 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
 
       {/* Scene-by-Scene Breakdown */}
       {result.script && result.script.scenes && (
-        <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-lg">
-          <h3 className="text-2xl font-extrabold mb-8 flex items-center gap-3 text-gray-900">
-            <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="rounded-3xl border border-border bg-surface p-8 shadow-lg">
+          <h3 className="text-2xl font-extrabold mb-8 flex items-center gap-3 text-white">
+            <svg className="w-6 h-6 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
             Scene-by-Scene Breakdown
@@ -265,16 +265,16 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                   openPreview();
                   goToScene(idx);
                 }}
-                className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 hover:ring-4 hover:ring-indigo-50 transition-all cursor-pointer group"
+                className="p-6 bg-surface rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-brand-purple/50 hover:ring-4 hover:ring-brand-purple/20 transition-all cursor-pointer group"
                 role="button"
                 tabIndex={0}
                 aria-label={`Preview Scene ${scene.scene_number}`}
               >
-                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-gray-50 group-hover:border-indigo-50 transition-colors">
-                  <span className="bg-indigo-50 text-indigo-700 text-sm font-extrabold px-3 py-1.5 rounded-lg border border-indigo-100 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border group-hover:border-brand-purple/20 transition-colors">
+                  <span className="bg-brand-purple/10 text-brand-purple text-sm font-extrabold px-3 py-1.5 rounded-lg border border-brand-purple/20 group-hover:bg-brand-purple group-hover:text-white transition-colors">
                     Scene {scene.scene_number}
                   </span>
-                  <span className="text-sm font-semibold text-gray-400 flex items-center gap-1">
+                  <span className="text-sm font-semibold text-text-muted flex items-center gap-1">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -283,20 +283,20 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="relative pl-4">
-                    <span className="absolute left-0 top-0 w-1 h-full bg-blue-100 rounded-full" />
-                    <span className="block text-xs font-bold text-blue-500 uppercase tracking-widest mb-2">Visual Direction</span>
-                    <p className="text-sm text-gray-700 font-medium leading-relaxed">{scene.visual}</p>
+                    <span className="absolute left-0 top-0 w-1 h-full bg-blue-500/30 rounded-full" />
+                    <span className="block text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Visual Direction</span>
+                    <p className="text-sm text-text-muted font-medium leading-relaxed">{scene.visual}</p>
                   </div>
                   <div className="relative pl-4">
-                    <span className="absolute left-0 top-0 w-1 h-full bg-purple-100 rounded-full" />
-                    <span className="block text-xs font-bold text-purple-500 uppercase tracking-widest mb-2">Voiceover</span>
-                    <p className="text-sm text-gray-800 italic leading-relaxed bg-purple-50/50 p-3 rounded-xl border border-purple-100/50">"{scene.voiceover}"</p>
+                    <span className="absolute left-0 top-0 w-1 h-full bg-brand-purple/30 rounded-full" />
+                    <span className="block text-xs font-bold text-brand-purple uppercase tracking-widest mb-2">Voiceover</span>
+                    <p className="text-sm text-white italic leading-relaxed bg-brand-purple/10 p-3 rounded-xl border border-brand-purple/20">"{scene.voiceover}"</p>
                   </div>
                 </div>
                 {scene.on_screen_text && (
-                  <div className="mt-4 pt-4 border-t border-gray-50">
-                    <span className="block text-xs font-bold text-pink-500 uppercase tracking-widest mb-2">On-Screen Text</span>
-                    <p className="text-base font-bold text-gray-900 bg-pink-50/50 inline-block px-4 py-2 rounded-xl border border-pink-100/50">{scene.on_screen_text}</p>
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <span className="block text-xs font-bold text-pink-400 uppercase tracking-widest mb-2">On-Screen Text</span>
+                    <p className="text-base font-bold text-white bg-pink-500/10 inline-block px-4 py-2 rounded-xl border border-pink-500/20">{scene.on_screen_text}</p>
                   </div>
                 )}
               </div>
@@ -329,9 +329,9 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
               {/* Progress bars */}
               <div className="absolute top-6 left-4 right-4 flex gap-1 z-10">
                 {scenes.map((_: any, i: number) => (
-                  <div key={i} className="h-0.5 flex-1 rounded-full overflow-hidden bg-white/30">
+                  <div key={i} className="h-0.5 flex-1 rounded-full overflow-hidden bg-surface/30">
                     <div
-                      className={`h-full rounded-full transition-all duration-300 ${i < currentScene ? 'bg-white w-full' : i === currentScene ? 'bg-white w-full animate-[grow_3s_linear_forwards]' : 'bg-transparent w-0'}`}
+                      className={`h-full rounded-full transition-all duration-300 ${i < currentScene ? 'bg-surface w-full' : i === currentScene ? 'bg-surface w-full animate-[grow_3s_linear_forwards]' : 'bg-transparent w-0'}`}
                     />
                   </div>
                 ))}
@@ -373,7 +373,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                   type="button"
                   onClick={() => goToScene(Math.max(0, currentScene - 1))}
                   disabled={currentScene === 0}
-                  className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white disabled:opacity-30 hover:bg-white/40 transition-all cursor-pointer"
+                  className="w-10 h-10 rounded-full bg-surface/20 flex items-center justify-center text-white disabled:opacity-30 hover:bg-surface/40 transition-all cursor-pointer"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -384,7 +384,7 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
                   type="button"
                   onClick={() => goToScene(Math.min(scenes.length - 1, currentScene + 1))}
                   disabled={currentScene === scenes.length - 1}
-                  className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white disabled:opacity-30 hover:bg-white/40 transition-all cursor-pointer"
+                  className="w-10 h-10 rounded-full bg-surface/20 flex items-center justify-center text-white disabled:opacity-30 hover:bg-surface/40 transition-all cursor-pointer"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -393,14 +393,14 @@ export function ReelResult({ result, onReset }: ReelResultProps) {
               </div>
 
               {/* Phone notch */}
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-5 bg-gray-900 rounded-full z-20" />
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-5 bg-[#0a142c] rounded-full z-20" />
             </div>
 
             {/* Close button */}
             <button
               type="button"
               onClick={closePreview}
-              className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-white text-gray-800 flex items-center justify-center shadow-xl hover:bg-gray-100 transition-all cursor-pointer z-10"
+              className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-surface text-white flex items-center justify-center shadow-xl hover:bg-border transition-all cursor-pointer z-10"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
