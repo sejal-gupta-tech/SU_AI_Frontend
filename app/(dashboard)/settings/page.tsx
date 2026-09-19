@@ -35,12 +35,12 @@ export default function SettingsPage() {
   return (
     <div className="max-w-4xl space-y-6 animate-in fade-in duration-500">
       <div className="flex items-center gap-2">
-        <SettingsIcon className="h-6 w-6 text-primary-600" />
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Settings</h1>
+        <SettingsIcon className="h-6 w-6 text-brand-purple" />
+        <h1 className="text-3xl font-bold tracking-tight text-white">Settings</h1>
       </div>
-      <p className="text-muted-foreground">Manage your account settings and preferences.</p>
+      <p className="text-text-muted">Manage your account settings and preferences.</p>
 
-      <Card>
+      <Card className="bg-surface border-border">
         <CardHeader>
           <CardTitle>Profile Details</CardTitle>
           <CardDescription>Update your personal information.</CardDescription>
@@ -66,7 +66,7 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-surface border-border">
         <CardHeader>
           <CardTitle>Security</CardTitle>
           <CardDescription>Update your password and secure your account.</CardDescription>

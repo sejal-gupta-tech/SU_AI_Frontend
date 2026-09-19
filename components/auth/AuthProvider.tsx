@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '@/types';
 import { useRouter, usePathname } from 'next/navigation';
+import { authService } from '@/services/auth.service';
 
 interface AuthContextType {
   user: User | null;
@@ -20,13 +21,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Check for existing session on mount
-    const checkAuth = () => {
+    const checkAuth = async () => {
       const token = localStorage.getItem('access_token');
-      const savedUser = localStorage.getItem('user');
       
-      if (token && savedUser) {
-        setUser(JSON.parse(savedUser));
+      if (token) {
+        try {
+          const freshUser = await authService.getCurrentUser();
+          setUser(freshUser);
+          localStorage.setItem('user', JSON.stringify(freshUser));
+        } catch (error) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('user');
+          setUser(null);
+        }
       }
       setIsLoading(false);
     };
@@ -35,28 +42,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // Protect routes
     if (!isLoading) {
       const isAuthRoute = pathname === '/login' || pathname === '/signup';
       const isAdminLoginRoute = pathname === '/admin/login';
-      const isProtectedRoute = ['/dashboard', '/business', '/brand', '/products', '/settings', '/onboarding'].some(route => pathname.startsWith(route));
+      const isProtectedRoute = ['/dashboard', '/business', '/brand', '/products', '/settings', '/onboarding', '/content', '/content-library', '/campaigns', '/messages', '/reviews', '/social-platforms', '/create', '/create-ad', '/ai-'].some(route => pathname.startsWith(route));
       const isAdminRoute = pathname.startsWith('/admin') && !isAdminLoginRoute;
 
       if (!user) {
-        if (isProtectedRoute) {
-          router.push('/login');
-        } else if (isAdminRoute) {
-          router.push('/admin/login');
+        if (isAdminRoute) {
+          router.replace('/admin/login');
+        } else if (isProtectedRoute) {
+          router.replace('/login');
         }
       } else {
-        const role = user.role || 'user'; // fallback just in case
+        const role = user.role || 'user';
         
         if (isAdminRoute && role !== 'admin') {
-          router.push('/dashboard');
-        } else if (isProtectedRoute && role === 'admin') {
-          router.push('/admin');
-        } else if (isAuthRoute || isAdminLoginRoute) {
-          router.push(role === 'admin' ? '/admin' : '/dashboard');
+          router.replace('/dashboard');
+        } else if (isAdminLoginRoute && role !== 'admin') {
+          router.replace('/dashboard');
+        } else if (isAuthRoute && role === 'admin') {
+          router.replace('/admin');
+        } else if (isAuthRoute && role === 'user') {
+          if (pathname === '/signup') {
+             // If already logged in, no need to stay on signup
+             // In case they just signed up, they should go to onboarding
+             // For safety we redirect to dashboard, but signup's onSubmit will push to onboarding if it can.
+             // Actually, if we are on signup, we redirect to dashboard.
+             router.replace('/dashboard');
+          } else {
+             router.replace('/dashboard');
+          }
+        } else if (isAdminLoginRoute && role === 'admin') {
+          router.replace('/admin');
         }
       }
     }
@@ -66,12 +84,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('access_token', token);
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
-    
-    if (userData.role === 'admin') {
-      router.push('/admin');
-    } else {
-      router.push('/dashboard');
-    }
   };
 
   const logout = () => {
@@ -79,7 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     setUser(null);
-    router.push(wasAdmin ? '/admin/login' : '/login');
+    router.replace(wasAdmin ? '/admin/login' : '/login');
   };
 
   return (

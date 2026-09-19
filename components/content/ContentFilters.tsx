@@ -28,8 +28,8 @@ export function ContentFilters({ currentFilter, onFilterChange }: ContentFilters
           onClick={() => onFilterChange(filter)}
           className={`rounded-full ${
             currentFilter === filter 
-              ? 'bg-primary-600 text-white hover:bg-primary-700' 
-              : 'bg-white hover:bg-primary-50 text-muted-foreground hover:text-primary-700'
+              ? 'bg-brand-purple text-white hover:bg-brand-purple/80' 
+              : 'bg-surface border-border hover:bg-brand-purple/10 text-text-muted hover:text-brand-purple'
           }`}
         >
           {filter}

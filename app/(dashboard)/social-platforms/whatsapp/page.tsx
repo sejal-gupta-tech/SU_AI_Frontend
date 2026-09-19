@@ -44,38 +44,40 @@ export default function WhatsAppIntegrationPage() {
       <div className="flex items-center gap-2">
         <WhatsAppIcon className="h-8 w-8" />
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">WhatsApp Integration</h1>
-          <p className="text-muted-foreground mt-1">Connect your WhatsApp Business API to automate messaging.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">WhatsApp Integration</h1>
+          <p className="text-text-muted mt-1">Connect your WhatsApp Business API to automate messaging.</p>
         </div>
       </div>
 
-      <Card>
+      <Card className="bg-surface border-border shadow-lg">
         <CardHeader>
           <div className="flex items-center gap-2">
             <WhatsAppIcon className="h-5 w-5" />
-            <CardTitle>WhatsApp API Settings</CardTitle>
+            <CardTitle className="text-white">WhatsApp API Settings</CardTitle>
           </div>
           <CardDescription>Enter your WhatsApp API credentials below.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>WhatsApp Phone Number ID</Label>
+            <Label className="text-white">WhatsApp Phone Number ID</Label>
             <Input 
               placeholder="e.g. 10234567890" 
               value={waPhoneId}
               onChange={(e) => setWaPhoneId(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
           <div className="space-y-2">
-            <Label>Permanent Access Token</Label>
+            <Label className="text-white">Permanent Access Token</Label>
             <Input 
               type="password" 
               placeholder="EAA..." 
               value={waToken}
               onChange={(e) => setWaToken(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
-          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-green-600 hover:bg-green-700">
+          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-brand-gradient hover:opacity-90 text-white transition-opacity">
             {isUpdating ? (
               <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>
             ) : updated ? (

@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #eef2ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #4f46e5;
-  --color-primary-700: #4338ca;
-  --color-primary-800: #3730a3;
-  --color-primary-900: #312e81;
-  --color-primary-950: #1e1b4b;
+  --color-primary-50: #fae8ff;
+  --color-primary-100: #f3cbf8;
+  --color-primary-200: #ecabf1;
+  --color-primary-300: #e58ce9;
+  --color-primary-400: #df6ce2;
+  --color-primary-500: #d84edb;
+  --color-primary-600: #BE32FF;
+  --color-primary-700: #a028d9;
+  --color-primary-800: #8220b0;
+  --color-primary-900: #65178a;
+  --color-primary-950: #491063;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -21,6 +21,21 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
+  /* Brand Colors */
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-coral: var(--brand-coral);
+  
+  /* Surfaces */
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-elevated: var(--surface-elevated);
+
+  /* Text Colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
@@ -28,13 +43,26 @@
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --border: #e2e8f0;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
+  --background: #071023;
+  --foreground: #FFFFFF;
+  
+  --brand-purple: #BE32FF;
+  --brand-pink: #F0449B;
+  --brand-coral: #FC9A5D;
+
+  --surface: #0B1630;
+  --surface-secondary: #101D3A;
+  --surface-elevated: #142343;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+
+  --card: #0B1630;
+  --card-foreground: #FFFFFF;
+  --border: rgba(255, 255, 255, 0.08);
+  --muted: #101D3A;
+  --muted-foreground: #94A3B8;
 }
 
 body {
@@ -44,15 +72,20 @@ body {
 }
 
 @layer utilities {
-  .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-pink) 55%, var(--brand-coral) 100%);
   }
   
-  .dark .glass-card {
-    background: rgba(24, 24, 27, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .text-brand-gradient {
+    background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-pink) 55%, var(--brand-coral) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glass-card {
+    background: rgba(11, 22, 48, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   @keyframes wave {
@@ -79,5 +112,21 @@ body {
 
   .animate-shimmer {
     animation: shimmer 1.5s infinite;
+  }
+  
+  /* Custom Scrollbar for dark theme */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--surface);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--surface-secondary);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--surface-elevated);
   }
 }

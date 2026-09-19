@@ -43,38 +43,40 @@ export default function LinkedinIntegrationPage() {
       <div className="flex items-center gap-2">
         <LinkedinIcon className="h-8 w-8 text-blue-700" />
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">LinkedIn Integration</h1>
-          <p className="text-muted-foreground mt-1">Connect your LinkedIn Profile or Company Page to automate publishing.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">LinkedIn Integration</h1>
+          <p className="text-text-muted mt-1">Connect your LinkedIn Profile or Company Page to automate publishing.</p>
         </div>
       </div>
 
-      <Card>
+      <Card className="bg-surface border-border shadow-lg">
         <CardHeader>
           <div className="flex items-center gap-2">
             <LinkedinIcon className="h-5 w-5 text-blue-700" />
-            <CardTitle>LinkedIn API Settings</CardTitle>
+            <CardTitle className="text-white">LinkedIn API Settings</CardTitle>
           </div>
           <CardDescription>Enter your LinkedIn API credentials below.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>LinkedIn Author ID</Label>
+            <Label className="text-white">LinkedIn Author ID</Label>
             <Input 
               placeholder="e.g. urn:li:person:12345..." 
               value={authorId}
               onChange={(e) => setAuthorId(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
           <div className="space-y-2">
-            <Label>Access Token</Label>
+            <Label className="text-white">Access Token</Label>
             <Input 
               type="password" 
               placeholder="AQV..." 
               value={token}
               onChange={(e) => setToken(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
-          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-blue-700 hover:bg-blue-800">
+          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-brand-gradient hover:opacity-90 text-white transition-opacity">
             {isUpdating ? (
               <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>
             ) : updated ? (

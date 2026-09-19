@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { authService } from "@/services/auth.service";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Logo } from "@/components/ui/Logo";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -47,14 +48,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-primary-50 to-background">
-      <div className="w-full max-w-md space-y-8">
-        <div className="flex flex-col items-center justify-center space-y-2 text-center">
-          <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600 mb-2">
-            <Sparkles className="w-7 h-7" />
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Welcome back</h1>
-          <p className="text-sm text-muted-foreground">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+      <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+          <Logo withText={false} className="scale-125 mb-4" />
+          <h1 className="text-3xl font-bold tracking-tight text-white">Welcome back</h1>
+          <p className="text-sm text-text-muted">
             Enter your email to sign in to your account
           </p>
         </div>
@@ -78,7 +77,7 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <Link href="#" className="text-xs text-primary-600 hover:underline">
+                  <Link href="#" className="text-xs text-brand-pink hover:underline">
                     Forgot password?
                   </Link>
                 </div>
@@ -93,7 +92,7 @@ export default function LoginPage() {
                 )}
               </div>
 
-              {error && <div className="p-3 text-sm text-red-500 bg-red-50 rounded-md">{error}</div>}
+              {error && <div className="p-3 text-sm text-red-500 bg-red-500/10 border border-red-500/20 rounded-md">{error}</div>}
 
               <Button type="submit" className="w-full h-11 text-base" disabled={isLoading}>
                 {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Sign In"}
@@ -102,9 +101,9 @@ export default function LoginPage() {
           </CardContent>
         </Card>
         
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-sm text-text-muted">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-primary-600 font-medium hover:underline">
+          <Link href="/signup" className="text-brand-pink font-medium hover:underline">
             Sign up
           </Link>
         </p>

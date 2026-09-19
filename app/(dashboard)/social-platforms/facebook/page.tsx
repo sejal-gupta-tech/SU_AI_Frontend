@@ -43,38 +43,40 @@ export default function FacebookIntegrationPage() {
       <div className="flex items-center gap-2">
         <FacebookIcon className="h-8 w-8 text-blue-600" />
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Facebook Integration</h1>
-          <p className="text-muted-foreground mt-1">Connect your Facebook Page to automate publishing.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">Facebook Integration</h1>
+          <p className="text-text-muted mt-1">Connect your Facebook Page to automate publishing.</p>
         </div>
       </div>
 
-      <Card>
+      <Card className="bg-surface border-border shadow-lg">
         <CardHeader>
           <div className="flex items-center gap-2">
             <FacebookIcon className="h-5 w-5 text-blue-600" />
-            <CardTitle>Facebook API Settings</CardTitle>
+            <CardTitle className="text-white">Facebook API Settings</CardTitle>
           </div>
           <CardDescription>Enter your Facebook Graph API credentials below.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>Facebook Page ID</Label>
+            <Label className="text-white">Facebook Page ID</Label>
             <Input 
               placeholder="e.g. 10435..." 
               value={fbPageId}
               onChange={(e) => setFbPageId(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
           <div className="space-y-2">
-            <Label>Page Access Token</Label>
+            <Label className="text-white">Page Access Token</Label>
             <Input 
               type="password" 
               placeholder="EAA..." 
               value={fbToken}
               onChange={(e) => setFbToken(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
-          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-blue-600 hover:bg-blue-700">
+          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-brand-gradient hover:opacity-90 text-white transition-opacity">
             {isUpdating ? (
               <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>
             ) : updated ? (

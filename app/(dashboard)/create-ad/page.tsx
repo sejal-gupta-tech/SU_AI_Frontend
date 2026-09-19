@@ -56,11 +56,11 @@ export default function CreateAdPage() {
 
       <div className="mb-8">
 
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-3xl font-bold text-white">
           Create Ad
         </h1>
 
-        <p className="mt-2 text-gray-500">
+        <p className="mt-2 text-text-muted">
           Generate AI-powered advertising creatives.
         </p>
 
@@ -68,13 +68,13 @@ export default function CreateAdPage() {
 
       <div className="grid gap-8 lg:grid-cols-3">
 
-        <div className="space-y-6 rounded-2xl border bg-white p-6 lg:col-span-2">
+        <div className="space-y-6 rounded-2xl border border-border bg-surface p-6 lg:col-span-2 shadow-lg">
 
           {/* Product */}
 
           <div>
 
-            <label className="mb-2 block font-semibold">
+            <label className="mb-2 block font-semibold text-white">
               Product
             </label>
 
@@ -84,7 +84,7 @@ export default function CreateAdPage() {
                 setProductId(e.target.value)
               }
               placeholder="Select Product ID"
-              className="w-full rounded-lg border p-3"
+              className="w-full rounded-lg border border-border bg-surface-elevated text-white p-3 focus:ring-2 focus:ring-brand-purple outline-none"
             />
 
           </div>
@@ -103,7 +103,7 @@ export default function CreateAdPage() {
 
             <div>
 
-              <label className="mb-2 block font-semibold">
+              <label className="mb-2 block font-semibold text-white">
                 Language
               </label>
 
@@ -112,7 +112,7 @@ export default function CreateAdPage() {
                 onChange={(e) =>
                   setLanguage(e.target.value)
                 }
-                className="w-full rounded-lg border p-3"
+                className="w-full rounded-lg border border-border bg-surface-elevated text-white p-3 focus:ring-2 focus:ring-brand-purple outline-none"
               >
                 <option>English</option>
                 <option>Hindi</option>
@@ -123,7 +123,7 @@ export default function CreateAdPage() {
 
             <div>
 
-              <label className="mb-2 block font-semibold">
+              <label className="mb-2 block font-semibold text-white">
                 CTA
               </label>
 
@@ -132,7 +132,7 @@ export default function CreateAdPage() {
                 onChange={(e) =>
                   setCta(e.target.value)
                 }
-                className="w-full rounded-lg border p-3"
+                className="w-full rounded-lg border border-border bg-surface-elevated text-white p-3 focus:ring-2 focus:ring-brand-purple outline-none"
               >
                 <option>Shop Now</option>
                 <option>Buy Now</option>
@@ -147,7 +147,7 @@ export default function CreateAdPage() {
 
           <div>
 
-            <label className="mb-2 block font-semibold">
+            <label className="mb-2 block font-semibold text-white">
               Target Audience
             </label>
 
@@ -157,14 +157,14 @@ export default function CreateAdPage() {
                 setAudience(e.target.value)
               }
               placeholder="Example: Women aged 18-35 interested in fashion"
-              className="w-full rounded-lg border p-3"
+              className="w-full rounded-lg border border-border bg-surface-elevated text-white p-3 focus:ring-2 focus:ring-brand-purple outline-none"
             />
 
           </div>
 
           <div>
 
-            <label className="mb-2 block font-semibold">
+            <label className="mb-2 block font-semibold text-white">
               Additional Instructions
             </label>
 
@@ -174,13 +174,13 @@ export default function CreateAdPage() {
                 setInstruction(e.target.value)
               }
               placeholder="Describe the style you want..."
-              className="min-h-28 w-full rounded-lg border p-3"
+              className="min-h-28 w-full rounded-lg border border-border bg-surface-elevated text-white p-3 focus:ring-2 focus:ring-brand-purple outline-none resize-none"
             />
 
           </div>
 
           {error && (
-            <div className="rounded-lg bg-red-50 p-4 text-red-600">
+            <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-4 text-red-400">
               {error}
             </div>
           )}
@@ -188,7 +188,7 @@ export default function CreateAdPage() {
           <button
             disabled={loading}
             onClick={handleGenerate}
-            className="w-full rounded-xl bg-indigo-600 px-6 py-4 font-semibold text-white disabled:opacity-50"
+            className="w-full rounded-xl bg-brand-gradient hover:opacity-90 transition-opacity px-6 py-4 font-semibold text-white disabled:opacity-50"
           >
             {loading
               ? "Generating Ad..."
@@ -199,9 +199,9 @@ export default function CreateAdPage() {
 
         {/* Preview */}
 
-        <div className="rounded-2xl border bg-white p-6">
+        <div className="rounded-2xl border border-border bg-surface p-6 shadow-lg">
 
-          <h2 className="mb-5 text-xl font-bold">
+          <h2 className="mb-5 text-xl font-bold text-white">
             Ad Preview
           </h2>
 
@@ -215,21 +215,21 @@ export default function CreateAdPage() {
                 className="w-full rounded-xl"
               />
 
-              <h3 className="text-xl font-bold">
+              <h3 className="text-xl font-bold text-white">
                 {result.headline}
               </h3>
 
-              <p className="text-gray-600">
+              <p className="text-text-secondary">
                 {result.primary_text}
               </p>
 
-              <p className="text-gray-500">
+              <p className="text-text-muted">
                 {result.description}
               </p>
 
               <a 
                 href="/products"
-                className="block text-center w-full rounded-lg bg-indigo-600 p-3 font-semibold text-white hover:bg-indigo-700 transition-colors active:scale-[0.98]"
+                className="block text-center w-full rounded-lg bg-brand-gradient p-3 font-semibold text-white hover:opacity-90 transition-opacity active:scale-[0.98]"
               >
                 {result.cta}
               </a>
@@ -241,7 +241,7 @@ export default function CreateAdPage() {
 
                     <span
                       key={tag}
-                      className="rounded-full bg-gray-100 px-3 py-1 text-sm"
+                      className="rounded-full bg-surface-elevated px-3 py-1 text-sm text-text-muted"
                     >
                       #{tag.replace("#", "")}
                     </span>
@@ -255,7 +255,7 @@ export default function CreateAdPage() {
 
           ) : (
 
-            <div className="flex min-h-[400px] items-center justify-center text-center text-gray-400">
+            <div className="flex min-h-[400px] items-center justify-center text-center text-text-muted">
               Your generated ad will appear here.
             </div>
 

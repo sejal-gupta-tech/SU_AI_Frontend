@@ -26,9 +26,9 @@ export function ContentCard({ content, onView, onEdit, onDelete }: ContentCardPr
 
   const StatusBadge = () => {
     const styles = {
-      Draft: 'bg-gray-100 text-gray-700',
-      Scheduled: 'bg-blue-100 text-blue-700',
-      Published: 'bg-green-100 text-green-700',
+      Draft: 'bg-surface-elevated text-text-secondary',
+      Scheduled: 'bg-brand-purple/10 text-brand-purple',
+      Published: 'bg-brand-coral/10 text-brand-coral',
     };
     
     return (
@@ -40,25 +40,25 @@ export function ContentCard({ content, onView, onEdit, onDelete }: ContentCardPr
 
   return (
     <Card className="hover:shadow-md transition-shadow group flex flex-col h-full">
-      <CardHeader className="p-4 pb-2 flex flex-row items-start justify-between space-y-0">
+      <CardHeader className="p-4 pb-2 flex flex-row items-start justify-between space-y-0 border-b border-border/10">
         <div className="flex gap-2 items-center">
-          <div className="p-2 bg-muted/50 rounded-md">
+          <div className="p-2 bg-surface-elevated rounded-md">
             {PlatformIcon()}
           </div>
           <div>
-            <span className="text-xs font-medium text-muted-foreground">{content.type}</span>
+            <span className="text-xs font-medium text-text-muted">{content.type}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {StatusBadge()}
           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-primary-600" onClick={() => onView?.(content)}>
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-text-muted hover:text-brand-purple" onClick={() => onView?.(content)}>
               <Eye className="h-3 w-3" />
             </Button>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-primary-600" onClick={() => onEdit?.(content)}>
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-text-muted hover:text-brand-purple" onClick={() => onEdit?.(content)}>
               <Edit2 className="h-3 w-3" />
             </Button>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-red-600" onClick={() => onDelete?.(content._id)}>
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-text-muted hover:text-red-500" onClick={() => onDelete?.(content._id)}>
               <Trash2 className="h-3 w-3" />
             </Button>
           </div>
@@ -66,19 +66,19 @@ export function ContentCard({ content, onView, onEdit, onDelete }: ContentCardPr
       </CardHeader>
       
       <CardContent className="p-4 flex-1">
-        <CardTitle className="text-base leading-tight mb-2 line-clamp-2">{content.title}</CardTitle>
-        <p className="text-sm text-muted-foreground line-clamp-3 mb-3">{content.caption}</p>
+        <CardTitle className="text-base leading-tight mb-2 line-clamp-2 text-white">{content.title}</CardTitle>
+        <p className="text-sm text-text-muted line-clamp-3 mb-3">{content.caption}</p>
         <div className="flex flex-wrap gap-1 mt-auto">
           {(content.hashtags || []).slice(0, 3).map((tag, i) => (
-            <span key={i} className="text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">{tag}</span>
+            <span key={i} className="text-[10px] text-brand-purple bg-brand-purple/10 px-1.5 py-0.5 rounded">{tag}</span>
           ))}
           {(content.hashtags?.length || 0) > 3 && (
-            <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">+{(content.hashtags?.length || 0) - 3}</span>
+            <span className="text-[10px] text-text-muted bg-surface-elevated px-1.5 py-0.5 rounded">+{(content.hashtags?.length || 0) - 3}</span>
           )}
         </div>
       </CardContent>
       
-      <CardFooter className="p-4 pt-0 text-xs text-muted-foreground flex justify-between items-center border-t border-border/50 mt-auto pt-3">
+      <CardFooter className="p-4 pt-0 text-xs text-text-muted flex justify-between items-center border-t border-border mt-auto pt-3">
         <span className="flex items-center">
           <Calendar className="h-3 w-3 mr-1" />
           {(content.updatedAt && !isNaN(new Date(content.updatedAt).getTime())) 

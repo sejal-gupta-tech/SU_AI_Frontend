@@ -45,38 +45,40 @@ export default function InstagramIntegrationPage() {
       <div className="flex items-center gap-2">
         <InstagramIcon className="h-8 w-8 text-pink-600" />
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Instagram Integration</h1>
-          <p className="text-muted-foreground mt-1">Connect your Instagram Business account to auto-publish Posts and Reels.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">Instagram Integration</h1>
+          <p className="text-text-muted mt-1">Connect your Instagram Business account to auto-publish Posts and Reels.</p>
         </div>
       </div>
 
-      <Card>
+      <Card className="bg-surface border-border shadow-lg">
         <CardHeader>
           <div className="flex items-center gap-2">
             <InstagramIcon className="h-5 w-5 text-pink-600" />
-            <CardTitle>Instagram Graph API</CardTitle>
+            <CardTitle className="text-white">Instagram Graph API</CardTitle>
           </div>
           <CardDescription>Enter your Instagram Graph API credentials below.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>Instagram Account ID</Label>
+            <Label className="text-white">Instagram Account ID</Label>
             <Input 
               placeholder="e.g. 178414..." 
               value={igAccountId}
               onChange={(e) => setIgAccountId(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
           <div className="space-y-2">
-            <Label>Permanent Access Token</Label>
+            <Label className="text-white">Permanent Access Token</Label>
             <Input 
               type="password" 
               placeholder="EAA..." 
               value={igToken}
               onChange={(e) => setIgToken(e.target.value)}
+              className="border-border bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none"
             />
           </div>
-          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-pink-600 hover:bg-pink-700">
+          <Button onClick={handleUpdate} disabled={isUpdating} className="w-full bg-brand-gradient hover:opacity-90 text-white transition-opacity">
             {isUpdating ? (
               <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>
             ) : updated ? (

@@ -87,17 +87,17 @@ export default function AIPostPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10">
+    <main className="py-10">
 
       <div className="max-w-6xl mx-auto px-4">
 
         <div className="mb-10">
 
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-3xl font-bold text-white">
             AI Post Maker
           </h1>
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-text-muted">
             Create AI-powered marketing content
             using your Business, Brand Kit and Products.
           </p>
@@ -106,9 +106,9 @@ export default function AIPostPage() {
 
         <div className="space-y-8">
 
-          <section className="rounded-2xl bg-white border p-6">
+          <section className="rounded-2xl bg-surface border border-border p-6 shadow-lg">
 
-            <h2 className="text-xl font-semibold mb-5">
+            <h2 className="text-xl font-semibold mb-5 text-white">
               1. Select Product
             </h2>
 
@@ -120,9 +120,9 @@ export default function AIPostPage() {
 
           </section>
 
-          <section className="rounded-2xl bg-white border p-6">
+          <section className="rounded-2xl bg-surface border border-border p-6 shadow-lg">
 
-            <h2 className="text-xl font-semibold mb-5">
+            <h2 className="text-xl font-semibold mb-5 text-white">
               2. Select Platform
             </h2>
 
@@ -133,9 +133,9 @@ export default function AIPostPage() {
 
           </section>
 
-          <section className="rounded-2xl bg-white border p-6">
+          <section className="rounded-2xl bg-surface border border-border p-6 shadow-lg">
 
-            <h2 className="text-xl font-semibold mb-5">
+            <h2 className="text-xl font-semibold mb-5 text-white">
               3. Select Objective
             </h2>
 
@@ -146,17 +146,18 @@ export default function AIPostPage() {
 
           </section>
 
-          <section className="rounded-2xl bg-white border p-6">
+          <section className="rounded-2xl bg-surface border border-border p-6 shadow-lg">
 
             <button
               onClick={handleGenerate}
               disabled={loading}
               className="
                 w-full rounded-xl
-                bg-black text-white
+                bg-brand-gradient text-white
                 px-6 py-4
                 font-semibold
                 disabled:opacity-50
+                hover:opacity-90 transition-opacity
               "
             >
               {loading

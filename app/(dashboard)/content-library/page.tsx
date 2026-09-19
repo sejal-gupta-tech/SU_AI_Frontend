@@ -249,10 +249,10 @@ export default function ContentLibraryPage() {
     <div className="space-y-6 animate-in fade-in duration-500 relative">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-2">
-          <Library className="h-6 w-6 text-primary-600" />
+          <Library className="h-6 w-6 text-brand-purple" />
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">Content Library</h1>
-            <p className="text-muted-foreground mt-1">Manage your generated AI content and publish them.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-white">Content Library</h1>
+            <p className="text-text-muted mt-1">Manage your generated AI content and publish them.</p>
           </div>
         </div>
         <Button asChild>
@@ -263,18 +263,18 @@ export default function ContentLibraryPage() {
         </Button>
       </div>
 
-      <div className="bg-card border border-border p-4 rounded-lg shadow-sm">
+      <div className="bg-surface border border-border p-4 rounded-lg shadow-sm">
         <ContentFilters currentFilter={filter} onFilterChange={setFilter} />
       </div>
 
       {isLoading ? (
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="h-8 w-8 animate-spin text-primary-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-brand-purple" />
         </div>
       ) : filteredContents.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-12 text-center text-muted-foreground border rounded-lg bg-muted/20 border-dashed">
-          <Library className="h-12 w-12 text-muted-foreground/30 mb-4" />
-          <h3 className="text-lg font-medium text-foreground">No content found</h3>
+        <div className="flex flex-col items-center justify-center p-12 text-center text-text-muted border rounded-lg bg-surface-elevated border-dashed border-border">
+          <Library className="h-12 w-12 text-text-muted mb-4" />
+          <h3 className="text-lg font-medium text-white">No content found</h3>
           <p className="max-w-sm mt-1 mb-4">You haven't generated any content that matches this filter yet.</p>
           <Button variant="outline" asChild>
             <Link href="/content">Generate Content</Link>
@@ -315,9 +315,9 @@ export default function ContentLibraryPage() {
                 
                 <div className="grid md:grid-cols-4 gap-4 mt-4">
                   {/* WhatsApp Publish Section */}
-                  <div className="p-4 border-t md:border-t-0 md:border-r bg-green-50/50">
-                    <h3 className="font-semibold text-green-900 mb-2">WhatsApp</h3>
-                    <p className="text-xs text-green-800 mb-4">Send directly to target number.</p>
+                  <div className="p-4 border-t md:border-t-0 md:border-r border-border bg-surface-secondary">
+                    <h3 className="font-semibold text-white mb-2">WhatsApp</h3>
+                    <p className="text-xs text-text-muted mb-4">Send directly to target number.</p>
                     
                     {!showWaRegister ? (
                       <div className="flex flex-col gap-2 w-full">
@@ -354,9 +354,9 @@ export default function ContentLibraryPage() {
                   </div>
                   
                   {/* Instagram Publish Section */}
-                  <div className="p-4 border-t md:border-t-0 md:border-r bg-pink-50/50">
-                    <h3 className="font-semibold text-pink-900 mb-2">Instagram</h3>
-                    <p className="text-xs text-pink-800 mb-4">Post directly to Feed or Reels.</p>
+                  <div className="p-4 border-t md:border-t-0 md:border-r border-border bg-surface-secondary">
+                    <h3 className="font-semibold text-white mb-2">Instagram</h3>
+                    <p className="text-xs text-text-muted mb-4">Post directly to Feed or Reels.</p>
                     
                     {!showIgRegister ? (
                       <Button onClick={handlePublishIg} disabled={isPublishingIg} className="w-full bg-pink-600 hover:bg-pink-700 h-8 text-xs">
@@ -385,9 +385,9 @@ export default function ContentLibraryPage() {
                   </div>
 
                   {/* Facebook Publish Section */}
-                  <div className="p-4 border-t md:border-t-0 bg-blue-50/50">
-                    <h3 className="font-semibold text-blue-900 mb-2">Facebook</h3>
-                    <p className="text-xs text-blue-800 mb-4">Post directly to your Page.</p>
+                  <div className="p-4 border-t md:border-t-0 border-border bg-surface-secondary">
+                    <h3 className="font-semibold text-white mb-2">Facebook</h3>
+                    <p className="text-xs text-text-muted mb-4">Post directly to your Page.</p>
                     
                     {!showFbRegister ? (
                       <Button onClick={handlePublishFb} disabled={isPublishingFb} className="w-full bg-blue-600 hover:bg-blue-700 h-8 text-xs">
@@ -419,9 +419,9 @@ export default function ContentLibraryPage() {
                     )}
                   </div>
                   {/* LinkedIn Publish Section */}
-                  <div className="p-4 border-t md:border-t-0 md:border-l bg-blue-50/50">
-                    <h3 className="font-semibold text-blue-900 mb-2">LinkedIn</h3>
-                    <p className="text-xs text-blue-800 mb-4">Post directly to your network.</p>
+                  <div className="p-4 border-t md:border-t-0 md:border-l border-border bg-surface-secondary">
+                    <h3 className="font-semibold text-white mb-2">LinkedIn</h3>
+                    <p className="text-xs text-text-muted mb-4">Post directly to your network.</p>
                     
                     {!showLiRegister ? (
                       <Button onClick={handlePublishLi} disabled={isPublishingLi} className="w-full bg-blue-700 hover:bg-blue-800 h-8 text-xs">

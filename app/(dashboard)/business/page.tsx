@@ -76,8 +76,8 @@ export default function BusinessProfilePage() {
   if (isFetching) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
-        <span className="ml-2 text-muted-foreground">Loading business information...</span>
+        <Loader2 className="w-8 h-8 animate-spin text-brand-purple" />
+        <span className="ml-2 text-text-muted">Loading business information...</span>
       </div>
     );
   }
@@ -85,10 +85,10 @@ export default function BusinessProfilePage() {
   return (
     <div className="max-w-4xl space-y-6 animate-in fade-in duration-500">
       <div className="flex items-center gap-2">
-        <Store className="h-6 w-6 text-primary-600" />
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Business Profile</h1>
+        <Store className="h-6 w-6 text-brand-purple" />
+        <h1 className="text-3xl font-bold tracking-tight text-white">Business Profile</h1>
       </div>
-      <p className="text-muted-foreground">Manage your business information so our AI can learn about you.</p>
+      <p className="text-text-muted">Manage your business information so our AI can learn about you.</p>
 
       <form onSubmit={handleSave}>
         <div className="space-y-6">
@@ -105,7 +105,7 @@ export default function BusinessProfilePage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
-                  <select id="category" className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
+                  <select id="category" className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-white ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
                     <option value="clothing">Clothing / Apparel</option>
                     <option value="restaurant">Restaurant / Cafe</option>
                   </select>
@@ -115,7 +115,7 @@ export default function BusinessProfilePage() {
                 <Label htmlFor="description">Business Description</Label>
                 <textarea 
                   id="description" 
-                  className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                  className="flex min-h-[100px] w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-white ring-offset-background placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple"
                   value={formData.description}
                   onChange={e => setFormData({...formData, description: e.target.value})}
                 />
@@ -159,7 +159,7 @@ export default function BusinessProfilePage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="language">Preferred Language</Label>
-                  <select id="language" className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.preferred_language} onChange={e => setFormData({...formData, preferred_language: e.target.value})}>
+                  <select id="language" className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-white ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple" value={formData.preferred_language} onChange={e => setFormData({...formData, preferred_language: e.target.value})}>
                     <option value="hinglish">Hinglish</option>
                     <option value="english">English</option>
                     <option value="hindi">Hindi</option>
@@ -170,7 +170,7 @@ export default function BusinessProfilePage() {
           </Card>
 
           {error && (
-            <div className="text-sm text-red-500 bg-red-50 p-3 rounded-md">
+            <div className="text-sm text-red-500 bg-red-500/10 border border-red-500/20 p-3 rounded-md">
               {error}
             </div>
           )}

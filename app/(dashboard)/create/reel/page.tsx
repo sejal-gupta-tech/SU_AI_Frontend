@@ -58,15 +58,15 @@ export default function CreateReelPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 min-h-screen">
       {/* Header */}
       <div className="mb-8 flex items-center gap-4">
-        <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg shadow-indigo-200">
+        <div className="p-3 bg-brand-gradient rounded-2xl shadow-lg shadow-brand-purple/20">
           <Video className="w-7 h-7 text-white" />
         </div>
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-indigo-800 to-gray-900">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white">
             AI Reel Studio
           </h1>
-          <p className="mt-1 text-gray-500 font-medium flex items-center gap-1.5 text-sm">
-            <Sparkles className="w-4 h-4 text-indigo-400" />
+          <p className="mt-1 text-text-muted font-medium flex items-center gap-1.5 text-sm">
+            <Sparkles className="w-4 h-4 text-brand-purple" />
             Generate high-converting short-form videos with AI instantly.
           </p>
         </div>
@@ -74,8 +74,8 @@ export default function CreateReelPage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="mb-6 rounded-2xl bg-red-50 p-4 text-sm text-red-600 border border-red-200 flex items-start gap-3">
-          <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="mb-6 rounded-2xl bg-red-500/10 p-4 text-sm text-red-400 border border-red-500/20 flex items-start gap-3">
+          <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div className="flex-1">
@@ -111,7 +111,7 @@ export default function CreateReelPage() {
             <button
               type="button"
               onClick={handleReset}
-              className="text-sm font-semibold text-gray-400 hover:text-red-500 transition-colors underline underline-offset-4 cursor-pointer"
+              className="text-sm font-semibold text-text-muted hover:text-red-400 transition-colors underline underline-offset-4 cursor-pointer"
             >
               Cancel &amp; Start Over
             </button>

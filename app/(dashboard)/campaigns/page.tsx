@@ -99,10 +99,10 @@ export default function CampaignsPage() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-2">
-          <Megaphone className="h-6 w-6 text-primary-600" />
+          <Megaphone className="h-6 w-6 text-brand-purple" />
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">AI Campaigns</h1>
-            <p className="text-muted-foreground mt-1">Generate complete marketing strategies with AI.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-white">AI Campaigns</h1>
+            <p className="text-text-muted mt-1">Generate complete marketing strategies with AI.</p>
           </div>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
@@ -112,7 +112,7 @@ export default function CampaignsPage() {
       </div>
 
       {showForm && (
-        <Card className="border-primary-100 bg-gradient-to-br from-background to-primary-50/20 animate-in slide-in-from-top-4">
+        <Card className="border-border bg-surface animate-in slide-in-from-top-4">
           <CardHeader>
             <CardTitle>Create AI Campaign</CardTitle>
             <CardDescription>Fill in the details and let AI do the rest.</CardDescription>
@@ -126,7 +126,7 @@ export default function CampaignsPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>Campaign Goal</Label>
-                  <select name="goal" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
+                  <select name="goal" className="flex h-10 w-full rounded-md border border-border bg-surface-elevated text-white px-3 py-2 text-sm focus:ring-2 focus:ring-brand-purple outline-none">
                     <option value="Brand Awareness">Brand Awareness</option>
                     <option value="Leads">Leads</option>
                     <option value="Sales">Sales</option>
@@ -161,20 +161,20 @@ export default function CampaignsPage() {
       )}
 
       {isLoading ? (
-        <div className="flex justify-center p-12"><Loader2 className="h-8 w-8 animate-spin text-primary-600" /></div>
+        <div className="flex justify-center p-12"><Loader2 className="h-8 w-8 animate-spin text-brand-purple" /></div>
       ) : campaigns.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-12 text-center text-muted-foreground border rounded-lg bg-muted/20 border-dashed">
-          <Target className="h-12 w-12 text-muted-foreground/30 mb-4" />
+        <div className="flex flex-col items-center justify-center p-12 text-center text-text-muted border rounded-lg bg-surface-elevated border-border border-dashed">
+          <Target className="h-12 w-12 text-text-muted mb-4" />
           <p>No campaigns generated yet.</p>
         </div>
       ) : (
         <div className="space-y-6">
           {campaigns.map(campaign => (
-            <Card key={campaign.id || campaign._id || Math.random().toString()} className="overflow-hidden">
-              <div className="bg-primary-50 p-4 border-b border-primary-100 flex justify-between items-center">
+            <Card key={campaign.id || campaign._id || Math.random().toString()} className="overflow-hidden bg-surface border-border">
+              <div className="bg-surface-elevated p-4 border-b border-border flex justify-between items-center">
                 <div>
-                  <h3 className="text-lg font-bold text-primary-900">{campaign.name}</h3>
-                  <p className="text-sm text-primary-700">Goal: {campaign.goal} • {campaign.duration}</p>
+                  <h3 className="text-lg font-bold text-white">{campaign.name}</h3>
+                  <p className="text-sm text-text-muted">Goal: {campaign.goal} • {campaign.duration}</p>
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm" onClick={() => setExpandedCampaignId(expandedCampaignId === (campaign.id || campaign._id as string) ? null : (campaign.id || campaign._id as string))}>
@@ -188,18 +188,18 @@ export default function CampaignsPage() {
               <CardContent className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="space-y-2">
-                    <h4 className="font-semibold text-sm text-muted-foreground uppercase">Strategy</h4>
-                    <p className="text-sm">{campaign.strategy}</p>
+                    <h4 className="font-semibold text-sm text-text-muted uppercase">Strategy</h4>
+                    <p className="text-sm text-white">{campaign.strategy}</p>
                   </div>
                   <div className="space-y-2">
-                    <h4 className="font-semibold text-sm text-muted-foreground uppercase">Content</h4>
-                    <ul className="text-sm list-disc pl-4 space-y-1">
+                    <h4 className="font-semibold text-sm text-text-muted uppercase">Content</h4>
+                    <ul className="text-sm text-white list-disc pl-4 space-y-1">
                       {campaign.suggestedPosts.slice(0,2).map((p,i) => <li key={i}>{p}</li>)}
                     </ul>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Ad Copy</h4>
+                      <h4 className="font-semibold text-sm text-text-muted uppercase">Ad Copy</h4>
                       <Button 
                         variant="secondary" 
                         size="sm" 
@@ -215,45 +215,45 @@ export default function CampaignsPage() {
                         Generate with Groq AI
                       </Button>
                     </div>
-                    <p className="text-sm text-muted-foreground italic">"{campaign.adCopy}"</p>
+                    <p className="text-sm text-text-muted italic">"{campaign.adCopy}"</p>
                   </div>
                 </div>
                 
                 {expandedCampaignId === (campaign.id || campaign._id) && (
                   <div className="mt-6 pt-6 border-t border-border grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-2">
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Target Audience & Platforms</h4>
-                      <p className="text-sm"><span className="font-medium text-foreground">Audience:</span> {campaign.targetAudience}</p>
-                      <p className="text-sm"><span className="font-medium text-foreground">Platforms:</span> {campaign.platforms.join(', ')}</p>
+                      <h4 className="font-semibold text-sm text-text-muted uppercase">Target Audience & Platforms</h4>
+                      <p className="text-sm text-text-secondary"><span className="font-medium text-white">Audience:</span> {campaign.targetAudience}</p>
+                      <p className="text-sm text-text-secondary"><span className="font-medium text-white">Platforms:</span> {campaign.platforms.join(', ')}</p>
                     </div>
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Budget & Schedule</h4>
-                      <p className="text-sm"><span className="font-medium text-foreground">Budget:</span> {campaign.budget}</p>
-                      <p className="text-sm"><span className="font-medium text-foreground">Posting:</span> {campaign.postingSchedule}</p>
+                      <h4 className="font-semibold text-sm text-text-muted uppercase">Budget & Schedule</h4>
+                      <p className="text-sm text-text-secondary"><span className="font-medium text-white">Budget:</span> {campaign.budget}</p>
+                      <p className="text-sm text-text-secondary"><span className="font-medium text-white">Posting:</span> {campaign.postingSchedule}</p>
                     </div>
                     <div className="space-y-2 md:col-span-2">
-                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Full Content Strategy</h4>
-                      <p className="text-sm">{campaign.contentStrategy}</p>
+                      <h4 className="font-semibold text-sm text-text-muted uppercase">Full Content Strategy</h4>
+                      <p className="text-sm text-text-secondary">{campaign.contentStrategy}</p>
                     </div>
                     {campaign.suggestedPosts.length > 0 && (
                       <div className="space-y-2 md:col-span-2">
-                        <h4 className="font-semibold text-sm text-muted-foreground uppercase">All Suggested Posts</h4>
-                        <ul className="text-sm list-disc pl-4 space-y-1">
+                        <h4 className="font-semibold text-sm text-text-muted uppercase">All Suggested Posts</h4>
+                        <ul className="text-sm text-text-secondary list-disc pl-4 space-y-1">
                           {campaign.suggestedPosts.map((p,i) => <li key={i}>{p}</li>)}
                         </ul>
                       </div>
                     )}
                     {campaign.suggestedReels && campaign.suggestedReels.length > 0 && (
                       <div className="space-y-2 md:col-span-2">
-                        <h4 className="font-semibold text-sm text-muted-foreground uppercase">Suggested Reels</h4>
-                        <ul className="text-sm list-disc pl-4 space-y-1">
+                        <h4 className="font-semibold text-sm text-text-muted uppercase">Suggested Reels</h4>
+                        <ul className="text-sm text-text-secondary list-disc pl-4 space-y-1">
                           {campaign.suggestedReels.map((r,i) => <li key={i}>{r}</li>)}
                         </ul>
                       </div>
                     )}
                     <div className="space-y-2 md:col-span-2">
-                      <h4 className="font-semibold text-sm text-muted-foreground uppercase">Call to Action</h4>
-                      <Button variant="outline" className="text-primary-600 bg-primary-50 border-primary-200 hover:bg-primary-100 hover:text-primary-700" asChild>
+                      <h4 className="font-semibold text-sm text-text-muted uppercase">Call to Action</h4>
+                      <Button variant="outline" className="text-brand-purple border border-brand-purple bg-brand-purple/10 hover:bg-brand-purple/20 hover:text-white" asChild>
                         <Link href="/content">
                           {campaign.callToAction}
                         </Link>

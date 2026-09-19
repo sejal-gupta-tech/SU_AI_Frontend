@@ -102,7 +102,7 @@ export default function BrandKitPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-brand-purple" />
       </div>
     );
   }
@@ -123,13 +123,13 @@ export default function BrandKitPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Palette className="h-6 w-6 text-primary-600" />
+          <Palette className="h-6 w-6 text-brand-purple" />
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">Brand Kit</h1>
-            <p className="text-muted-foreground text-sm mt-0.5">Define your brand identity for consistent AI-generated content.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-white">Brand Kit</h1>
+            <p className="text-text-muted text-sm mt-0.5">Define your brand identity for consistent AI-generated content.</p>
           </div>
         </div>
-        <Button onClick={handleSave} disabled={saving} className="bg-primary-600 hover:bg-primary-700 text-white">
+        <Button onClick={handleSave} disabled={saving} className="bg-brand-gradient hover:opacity-90 transition-opacity text-white">
           {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
           {saving ? "Saving..." : "Save Brand Kit"}
         </Button>
@@ -151,19 +151,19 @@ export default function BrandKitPage() {
         <div className="lg:col-span-2 space-y-6">
 
           {/* Logo */}
-          <Card>
+          <Card className="bg-surface border-border shadow-lg">
             <CardHeader>
-              <CardTitle>Brand Logo</CardTitle>
+              <CardTitle className="text-white">Brand Logo</CardTitle>
               <CardDescription>Upload your logo to use in AI-generated content.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-4">
                 {form.logo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={getLogoUrl(form.logo_url)} alt="Brand Logo" className="h-20 w-20 rounded-xl object-contain border border-border bg-muted" />
+                  <img src={getLogoUrl(form.logo_url)} alt="Brand Logo" className="h-20 w-20 rounded-xl object-contain border border-border bg-surface-elevated" />
                 ) : (
-                  <div className="h-20 w-20 rounded-xl border-2 border-dashed border-border bg-muted flex items-center justify-center">
-                    <Palette className="h-8 w-8 text-muted-foreground" />
+                  <div className="h-20 w-20 rounded-xl border-2 border-dashed border-border bg-surface-elevated flex items-center justify-center">
+                    <Palette className="h-8 w-8 text-text-muted" />
                   </div>
                 )}
                 <div>
@@ -176,16 +176,16 @@ export default function BrandKitPage() {
                     </Button>
                   </label>
                   <input id="logo-upload" type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
-                  <p className="text-xs text-muted-foreground mt-1">PNG, JPG, SVG up to 5MB</p>
+                  <p className="text-xs text-text-muted mt-1">PNG, JPG, SVG up to 5MB</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           {/* Colors & Font */}
-          <Card>
+          <Card className="bg-surface border-border shadow-lg">
             <CardHeader>
-              <CardTitle>Colors &amp; Typography</CardTitle>
+              <CardTitle className="text-white">Colors &amp; Typography</CardTitle>
               <CardDescription>Set your brand colour palette and preferred font.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -213,7 +213,7 @@ export default function BrandKitPage() {
                     id="font"
                     value={form.font || "Inter"}
                     onChange={(e) => update("font", e.target.value)}
-                    className="flex h-10 w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex h-10 w-full rounded-md border border-border bg-surface-elevated text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple"
                   >
                     {["Inter", "Roboto", "Open Sans", "Montserrat", "Playfair Display", "Lato", "Poppins"].map((f) => (
                       <option key={f} value={f}>{f}</option>
@@ -226,7 +226,7 @@ export default function BrandKitPage() {
                     id="social_style"
                     value={form.social_style || ""}
                     onChange={(e) => update("social_style", e.target.value)}
-                    className="flex h-10 w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex h-10 w-full rounded-md border border-border bg-surface-elevated text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple"
                   >
                     <option value="">Select style</option>
                     {["Minimal", "Bold", "Elegant", "Playful", "Professional", "Vibrant"].map((s) => (
@@ -239,9 +239,9 @@ export default function BrandKitPage() {
           </Card>
 
           {/* Brand Voice */}
-          <Card>
+          <Card className="bg-surface border-border shadow-lg">
             <CardHeader>
-              <CardTitle>Brand Voice</CardTitle>
+              <CardTitle className="text-white">Brand Voice</CardTitle>
               <CardDescription>Help AI understand how to write for your brand.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -251,7 +251,7 @@ export default function BrandKitPage() {
                   id="tone"
                   value={form.tone || ""}
                   onChange={(e) => update("tone", e.target.value)}
-                  className="flex h-10 w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="flex h-10 w-full rounded-md border border-border bg-surface-elevated text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple"
                 >
                   <option value="">Select tone</option>
                   {["Professional", "Friendly", "Luxury", "Playful", "Inspirational", "Casual", "Authoritative"].map((t) => (
@@ -267,7 +267,7 @@ export default function BrandKitPage() {
                   value={form.brand_description || ""}
                   onChange={(e) => update("brand_description", e.target.value)}
                   placeholder="Describe your brand, what you sell, and your unique value..."
-                  className="flex w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
+                  className="flex w-full rounded-md border border-border bg-surface-elevated px-3 py-2 text-sm text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-purple resize-none"
                 />
               </div>
               <div className="space-y-2">
@@ -282,10 +282,9 @@ export default function BrandKitPage() {
             </CardContent>
           </Card>
 
-          {/* Contact & Location */}
-          <Card>
+          <Card className="bg-surface border-border shadow-lg">
             <CardHeader>
-              <CardTitle>Contact &amp; Location</CardTitle>
+              <CardTitle className="text-white">Contact &amp; Location</CardTitle>
               <CardDescription>Used in AI-generated promotional content and local targeting.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -334,10 +333,9 @@ export default function BrandKitPage() {
 
         </div>
 
-        {/* Live Preview */}
         <div className="lg:col-span-1">
           <div className="sticky top-24 space-y-4">
-            <Card className="overflow-hidden" style={{ borderColor: `${primaryColor}60` }}>
+            <Card className="overflow-hidden bg-surface shadow-lg" style={{ borderColor: `${primaryColor}60` }}>
               <div className="h-36 flex items-center justify-center p-6" style={{ background: `linear-gradient(135deg, ${primaryColor}25, ${secondaryColor}25)` }}>
                 {form.logo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -352,24 +350,24 @@ export default function BrandKitPage() {
                   <p className="text-xs font-medium mt-1" style={{ color: secondaryColor }}>{form.tone || "Brand Tone"}</p>
                 </div>
                 <div className="h-px w-full bg-border" />
-                <p className="text-xs text-muted-foreground line-clamp-3">{form.brand_description || "Your brand description will appear here and be used in AI-generated content."}</p>
+                <p className="text-xs text-text-muted line-clamp-3">{form.brand_description || "Your brand description will appear here and be used in AI-generated content."}</p>
                 <div className="flex justify-center gap-2 pt-2">
                   <div className="flex items-center gap-1.5">
                     <div className="w-6 h-6 rounded-full border border-border/50" style={{ backgroundColor: primaryColor }} />
-                    <span className="text-xs text-muted-foreground font-mono">{primaryColor}</span>
+                    <span className="text-xs text-text-muted font-mono">{primaryColor}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-6 h-6 rounded-full border border-border/50" style={{ backgroundColor: secondaryColor }} />
-                    <span className="text-xs text-muted-foreground font-mono">{secondaryColor}</span>
+                    <span className="text-xs text-text-muted font-mono">{secondaryColor}</span>
                   </div>
                 </div>
                 {form.font && (
-                  <p className="text-xs text-muted-foreground">Font: <span className="font-medium text-foreground">{form.font}</span></p>
+                  <p className="text-xs text-text-muted">Font: <span className="font-medium text-white">{form.font}</span></p>
                 )}
               </CardContent>
             </Card>
 
-            <p className="text-xs text-center text-muted-foreground px-2">
+            <p className="text-xs text-center text-text-muted px-2">
               This preview shows how your brand identity will guide AI-generated content.
             </p>
           </div>

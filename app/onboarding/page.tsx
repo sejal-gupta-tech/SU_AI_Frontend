@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { Logo } from "@/components/ui/Logo";
 
 const steps = [
   { id: "business", title: "Business Details" },
@@ -57,19 +58,16 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-background to-background flex flex-col items-center py-12 px-4 sm:px-6">
+    <div className="min-h-screen bg-background flex flex-col items-center py-12 px-4 sm:px-6">
       <div className="w-full max-w-2xl mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-2 font-bold text-xl text-primary-600">
-          <Sparkles className="w-6 h-6" />
-          SevenUnique AI Setup
-        </div>
+        <Logo />
       </div>
 
       <div className="w-full max-w-2xl mb-8">
         <div className="flex items-center justify-between relative">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-primary-100 -z-10 rounded-full"></div>
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-surface-secondary -z-10 rounded-full"></div>
           <div 
-            className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-primary-500 -z-10 rounded-full transition-all duration-300"
+            className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-brand-gradient -z-10 rounded-full transition-all duration-300"
             style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
           ></div>
           
@@ -78,13 +76,13 @@ export default function OnboardingPage() {
               <div 
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
                   idx <= currentStep 
-                    ? "bg-primary-600 text-white" 
-                    : "bg-white border-2 border-primary-200 text-muted-foreground"
+                    ? "bg-brand-purple text-white shadow-[0_0_10px_rgba(190,50,255,0.5)]" 
+                    : "bg-surface border-2 border-border text-text-muted"
                 }`}
               >
                 {idx < currentStep ? <Check className="w-4 h-4" /> : idx + 1}
               </div>
-              <span className={`text-xs font-medium ${idx <= currentStep ? "text-primary-800" : "text-muted-foreground"}`}>
+              <span className={`text-xs font-medium ${idx <= currentStep ? "text-white" : "text-text-muted"}`}>
                 {step.title}
               </span>
             </div>
@@ -92,13 +90,13 @@ export default function OnboardingPage() {
         </div>
       </div>
 
-      <Card className="w-full max-w-2xl bg-card border-border shadow-lg">
+      <Card className="w-full max-w-2xl bg-surface border-border shadow-2xl">
         <CardContent className="p-8 sm:p-12">
           {currentStep === 0 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-2 text-center mb-8">
-                <h2 className="text-3xl font-bold">Welcome! What&apos;s your business name?</h2>
-                <p className="text-muted-foreground">Let&apos;s start customizing your AI marketing experience.</p>
+                <h2 className="text-3xl font-bold text-white">Welcome! What&apos;s your business name?</h2>
+                <p className="text-text-muted">Let&apos;s start customizing your AI marketing experience.</p>
               </div>
               
               <div className="space-y-4">
@@ -108,7 +106,7 @@ export default function OnboardingPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Business Category</Label>
-                  <select id="category" className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})}>
+                  <select id="category" className="flex h-12 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-white ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})}>
                     <option value="">Select a category</option>
                     <option value="clothing">Clothing / Apparel</option>
                     <option value="restaurant">Restaurant / Cafe</option>
@@ -127,8 +125,8 @@ export default function OnboardingPage() {
           {currentStep === 1 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-2 text-center mb-8">
-                <h2 className="text-3xl font-bold">Where can customers find you?</h2>
-                <p className="text-muted-foreground">This helps our AI understand your current brand.</p>
+                <h2 className="text-3xl font-bold text-white">Where can customers find you?</h2>
+                <p className="text-text-muted">This helps our AI understand your current brand.</p>
               </div>
               
               <div className="space-y-4">
@@ -151,8 +149,8 @@ export default function OnboardingPage() {
           {currentStep === 2 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-2 text-center mb-8">
-                <h2 className="text-3xl font-bold">Who are your customers?</h2>
-                <p className="text-muted-foreground">We&apos;ll tailor the AI generated content to speak their language.</p>
+                <h2 className="text-3xl font-bold text-white">Who are your customers?</h2>
+                <p className="text-text-muted">We&apos;ll tailor the AI generated content to speak their language.</p>
               </div>
               
               <div className="space-y-4">
@@ -162,7 +160,7 @@ export default function OnboardingPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="language">Preferred Marketing Language</Label>
-                  <select id="language" className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500" value={formData.preferred_language} onChange={(e) => setFormData({...formData, preferred_language: e.target.value})}>
+                  <select id="language" className="flex h-12 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-white ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple" value={formData.preferred_language} onChange={(e) => setFormData({...formData, preferred_language: e.target.value})}>
                     <option value="hinglish">Hinglish</option>
                     <option value="english">English</option>
                     <option value="hindi">Hindi</option>
@@ -177,18 +175,18 @@ export default function OnboardingPage() {
 
           {currentStep === 3 && (
             <div className="space-y-6 text-center animate-in fade-in zoom-in-95 duration-500 py-8">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 shadow-inner">
+              <div className="w-20 h-20 bg-brand-purple/20 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-purple shadow-[0_0_20px_rgba(190,50,255,0.4)]">
                 <Sparkles className="w-10 h-10 animate-pulse" />
               </div>
-              <h2 className="text-3xl font-bold">Your AI is Ready!</h2>
-              <p className="text-muted-foreground max-w-md mx-auto">
+              <h2 className="text-3xl font-bold text-white">Your AI is Ready!</h2>
+              <p className="text-text-muted max-w-md mx-auto">
                 We&apos;ve analyzed your business details and setup your personalized AI marketing engine. 
               </p>
             </div>
           )}
 
           {error && (
-            <div className="mt-6 p-4 text-sm text-red-500 bg-red-50 rounded-md border border-red-100">
+            <div className="mt-6 p-4 text-sm text-red-500 bg-red-500/10 rounded-md border border-red-500/20">
               {error}
             </div>
           )}

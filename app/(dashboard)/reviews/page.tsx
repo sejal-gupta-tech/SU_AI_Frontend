@@ -67,50 +67,50 @@ export default function ReviewsPage() {
       <div className="flex items-center gap-2">
         <Star className="h-6 w-6 text-amber-500" />
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Google Reviews</h1>
-          <p className="text-muted-foreground mt-1">Manage and respond to your customer reviews.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">Google Reviews</h1>
+          <p className="text-text-muted mt-1">Manage and respond to your customer reviews.</p>
         </div>
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center p-12"><Loader2 className="h-8 w-8 animate-spin text-primary-600" /></div>
+        <div className="flex justify-center p-12"><Loader2 className="h-8 w-8 animate-spin text-brand-purple" /></div>
       ) : reviews.length === 0 ? (
-        <div className="text-center p-12 border rounded-lg bg-muted/20 text-muted-foreground">No reviews yet.</div>
+        <div className="text-center p-12 border border-border rounded-lg bg-surface-elevated text-text-muted shadow-lg">No reviews yet.</div>
       ) : (
         <div className="space-y-6">
           {reviews.map(review => (
-            <Card key={review._id} className="overflow-hidden">
+            <Card key={review._id} className="overflow-hidden bg-surface border-border shadow-lg">
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="font-bold text-lg">{review.customerName}</h3>
+                    <h3 className="font-bold text-lg text-white">{review.customerName}</h3>
                     <div className="flex gap-1 mt-1">
                       {renderStars(review.rating)}
                     </div>
                   </div>
-                  <span className={`px-2 py-1 text-xs rounded-full ${review.status === 'Replied' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                  <span className={`px-2 py-1 text-xs rounded-full ${review.status === 'Replied' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
                     {review.status}
                   </span>
                 </div>
-                <p className="text-muted-foreground">{review.reviewText}</p>
+                <p className="text-text-muted">{review.reviewText}</p>
                 
                 {review.status === 'Replied' ? (
-                  <div className="mt-4 bg-muted/50 p-4 rounded-lg border-l-4 border-primary-500">
-                    <p className="text-sm font-semibold mb-1">Your Reply:</p>
-                    <p className="text-sm text-muted-foreground">{review.reply}</p>
+                  <div className="mt-4 bg-brand-purple/10 p-4 rounded-lg border-l-4 border-brand-purple">
+                    <p className="text-sm font-semibold mb-1 text-white">Your Reply:</p>
+                    <p className="text-sm text-text-secondary">{review.reply}</p>
                   </div>
                 ) : (
                   <div className="mt-6 pt-4 border-t border-border space-y-4">
                     {aiReplies[review._id] ? (
                       <div className="space-y-3 animate-in fade-in zoom-in-95">
                         <textarea 
-                          className="w-full min-h-[80px] p-3 border rounded-md text-sm"
+                          className="w-full min-h-[80px] p-3 border border-border rounded-md text-sm bg-surface-elevated text-white focus:ring-2 focus:ring-brand-purple outline-none resize-none"
                           value={aiReplies[review._id]}
                           onChange={(e) => setAiReplies({...aiReplies, [review._id]: e.target.value})}
                         />
                         <div className="flex gap-2 justify-end">
-                          <Button variant="outline" size="sm" onClick={() => handleGenerateReply(review._id)}>Regenerate</Button>
-                          <Button size="sm" onClick={() => handleSendReply(review._id)}>
+                          <Button variant="outline" size="sm" onClick={() => handleGenerateReply(review._id)} className="border-border hover:bg-surface-elevated hover:text-white">Regenerate</Button>
+                          <Button size="sm" onClick={() => handleSendReply(review._id)} className="bg-brand-gradient hover:opacity-90 text-white">
                             <Send className="h-4 w-4 mr-2" /> Post Reply
                           </Button>
                         </div>
@@ -120,11 +120,12 @@ export default function ReviewsPage() {
                         variant="outline" 
                         onClick={() => handleGenerateReply(review._id)}
                         disabled={generatingFor === review._id}
+                        className="border-border hover:bg-surface-elevated hover:text-white"
                       >
                         {generatingFor === review._id ? (
                           <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Generating...</>
                         ) : (
-                          <><Sparkles className="h-4 w-4 mr-2 text-primary-600" /> Generate AI Reply</>
+                          <><Sparkles className="h-4 w-4 mr-2 text-brand-purple" /> Generate AI Reply</>
                         )}
                       </Button>
                     )}

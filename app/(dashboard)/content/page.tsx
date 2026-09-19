@@ -45,10 +45,10 @@ function ContentStudioContent() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-6 w-6 text-primary-600" />
+          <Sparkles className="h-6 w-6 text-brand-purple" />
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">AI Content Studio</h1>
-            <p className="text-muted-foreground mt-1">Create engaging marketing content with AI.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-white">AI Content Studio</h1>
+            <p className="text-text-muted mt-1">Create engaging marketing content with AI.</p>
           </div>
         </div>
         <Button variant="outline" asChild>
@@ -88,7 +88,7 @@ function ContentStudioContent() {
 
 export default function ContentStudioPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center p-12"><Loader2 className="h-8 w-8 animate-spin text-primary-600" /></div>}>
+    <Suspense fallback={<div className="flex justify-center p-12"><Loader2 className="h-8 w-8 animate-spin text-brand-purple" /></div>}>
       <ContentStudioContent />
     </Suspense>
   );

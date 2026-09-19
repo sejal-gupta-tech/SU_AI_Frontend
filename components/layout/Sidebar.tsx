@@ -6,7 +6,7 @@ import { useState } from "react";
 import { LayoutDashboard, Store, Palette, Package, Settings, LogOut, Sparkles, Megaphone, MessageSquare, Star, Library, Share2, ChevronDown, ChevronRight, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth/AuthProvider";
-
+import { Logo } from "@/components/ui/Logo";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="#25D366" className={className}>
@@ -79,7 +79,6 @@ export function Sidebar() {
   const pathname = usePathname();
   const { logout } = useAuth();
   
-  // By default open the Social Media dropdown if we are on one of its pages
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({
     "Social Media": ["/create-ad", "/create/reel", "/ai-post", "/ai-photoshoot", "/ai-calendar"].some(p => pathname.startsWith(p)),
     "Social Platforms": ["/social-platforms"].some(p => pathname.startsWith(p))
@@ -90,17 +89,17 @@ export function Sidebar() {
   };
 
   return (
-    <div className="hidden lg:flex h-full w-64 flex-col bg-card border-r border-border">
-      <div className="flex h-16 items-center px-6 border-b border-border">
-        <Link href="/dashboard" className="flex items-center gap-2 font-bold text-lg text-primary-600">
-          SevenUnique AI
+    <div className="hidden lg:flex h-full w-64 flex-col bg-surface border-r border-border">
+      <div className="flex h-16 items-center px-6 border-b border-border min-w-0">
+        <Link href="/dashboard" className="flex items-center gap-2 overflow-hidden min-w-0 flex-1">
+          <Logo size="sm" />
         </Link>
       </div>
       <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto custom-scrollbar">
-        {navigation.map((item) => {
+        {navigation.map((item: any) => {
           if (item.children) {
             const isOpen = openDropdowns[item.name];
-            const isChildActive = item.children.some(child => pathname.startsWith(child.href));
+            const isChildActive = item.children.some((child: any) => pathname.startsWith(child.href));
             
             return (
               <div key={item.name} className="space-y-1">
@@ -109,30 +108,30 @@ export function Sidebar() {
                   className={cn(
                     "group w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md transition-colors",
                     isChildActive && !isOpen
-                      ? "bg-primary-50 text-primary-700"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      ? "bg-brand-purple/15 border border-brand-purple/35 text-white"
+                      : "text-text-muted hover:bg-surface-elevated hover:text-white"
                   )}
                 >
                   <div className="flex items-center">
                     <item.icon
                       className={cn(
                         "mr-3 h-5 w-5 flex-shrink-0",
-                        isChildActive && !isOpen ? "text-primary-600" : "text-muted-foreground group-hover:text-foreground"
+                        isChildActive && !isOpen ? "text-brand-purple" : "text-text-muted group-hover:text-white"
                       )}
                       aria-hidden="true"
                     />
                     {item.name}
                   </div>
                   {isOpen ? (
-                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                    <ChevronDown className="h-4 w-4 text-text-muted" />
                   ) : (
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                     <ChevronRight className="h-4 w-4 text-text-muted" />
                   )}
                 </button>
                 
                 {isOpen && (
                   <div className="pl-11 pr-3 space-y-1">
-                    {item.children.map((child) => {
+                    {item.children.map((child: any) => {
                       const isActive = pathname.startsWith(child.href);
                       return (
                         <Link
@@ -141,8 +140,8 @@ export function Sidebar() {
                           className={cn(
                             "group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
                             isActive
-                              ? "bg-primary-50 text-primary-700"
-                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                              ? "bg-brand-purple/15 border border-brand-purple/35 text-white"
+                              : "text-text-muted hover:bg-surface-elevated hover:text-white"
                           )}
                         >
                           {child.icon && (
@@ -172,14 +171,14 @@ export function Sidebar() {
               className={cn(
                 "group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
                 isActive
-                  ? "bg-primary-50 text-primary-700"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-brand-purple/15 border border-brand-purple/35 text-white"
+                  : "text-text-muted hover:bg-surface-elevated hover:text-white"
               )}
             >
               <item.icon
                 className={cn(
                   "mr-3 h-5 w-5 flex-shrink-0",
-                  isActive ? "text-primary-600" : "text-muted-foreground group-hover:text-foreground"
+                  isActive ? "text-brand-purple" : "text-text-muted group-hover:text-white"
                 )}
                 aria-hidden="true"
               />
@@ -191,14 +190,12 @@ export function Sidebar() {
       <div className="p-4 border-t border-border">
         <button
           onClick={logout}
-          className="group flex w-full items-center px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-600 transition-colors"
+          className="group flex w-full items-center px-3 py-2 text-sm font-medium rounded-md text-text-muted hover:bg-red-500/10 hover:text-red-500 transition-colors"
         >
-          <LogOut className="mr-3 h-5 w-5 text-muted-foreground group-hover:text-red-500" />
+          <LogOut className="mr-3 h-5 w-5 text-text-muted group-hover:text-red-500" />
           Logout
         </button>
       </div>
     </div>
   );
 }
-
-

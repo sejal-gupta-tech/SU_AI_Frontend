@@ -108,15 +108,15 @@ export default function ProductsPage() {
       <div className="space-y-6 animate-in fade-in zoom-in-95 duration-300">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Package className="h-6 w-6 text-primary-600" />
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">Add New Product</h1>
+            <Package className="h-6 w-6 text-brand-purple" />
+            <h1 className="text-3xl font-bold tracking-tight text-white">Add New Product</h1>
           </div>
-          <Button variant="ghost" onClick={() => setIsAddingProduct(false)}>
+          <Button variant="ghost" onClick={() => setIsAddingProduct(false)} className="hover:bg-surface-elevated hover:text-white">
             <X className="h-5 w-5 mr-2" /> Cancel
           </Button>
         </div>
 
-        <Card className="max-w-2xl">
+        <Card className="max-w-2xl bg-surface border-border shadow-lg">
           <CardContent className="pt-6 space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Product Name *</Label>
@@ -143,7 +143,7 @@ export default function ProductsPage() {
               <Label htmlFor="desc">Description</Label>
               <textarea
                 id="desc"
-                className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                className="flex min-h-[100px] w-full rounded-md border border-border bg-surface-elevated px-3 py-2 text-sm text-white placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple resize-none"
                 placeholder="Describe your product..."
                 value={newProduct.description || ""}
                 onChange={(e) => setNewProduct((p) => ({ ...p, description: e.target.value }))}
@@ -151,8 +151,8 @@ export default function ProductsPage() {
             </div>
 
             <div className="pt-4 flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsAddingProduct(false)}>Cancel</Button>
-              <Button onClick={handleSaveProduct} disabled={saving} className="bg-primary-600 hover:bg-primary-700 text-white">
+              <Button variant="outline" onClick={() => setIsAddingProduct(false)} className="border-border hover:bg-surface-elevated hover:text-white">Cancel</Button>
+              <Button onClick={handleSaveProduct} disabled={saving} className="bg-brand-gradient hover:opacity-90 transition-opacity text-white">
                 {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
                 {saving ? "Saving..." : "Save Product"}
               </Button>
@@ -167,32 +167,32 @@ export default function ProductsPage() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-2">
-          <Package className="h-6 w-6 text-primary-600" />
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Products</h1>
+          <Package className="h-6 w-6 text-brand-purple" />
+          <h1 className="text-3xl font-bold tracking-tight text-white">Products</h1>
         </div>
-        <Button onClick={() => setIsAddingProduct(true)} className="bg-primary-600 hover:bg-primary-700 text-white">
+        <Button onClick={() => setIsAddingProduct(true)} className="bg-brand-gradient hover:opacity-90 transition-opacity text-white">
           <Plus className="h-4 w-4 mr-2" /> Add Product
         </Button>
       </div>
-      <p className="text-muted-foreground">Manage your product catalogue. AI uses this data to create posts and ads.</p>
+      <p className="text-text-muted">Manage your product catalogue. AI uses this data to create posts and ads.</p>
 
       <div className="flex items-center gap-2 max-w-sm">
         <div className="relative w-full">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-text-muted" />
           <Input
             type="search"
             placeholder="Search products..."
-            className="pl-9"
+            className="pl-9 border-border bg-surface-elevated text-white placeholder:text-text-muted focus:ring-brand-purple outline-none"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="bg-surface rounded-xl border border-border shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-muted-foreground uppercase bg-muted/50 border-b border-border">
+            <thead className="text-xs text-text-muted uppercase bg-surface-elevated border-b border-border">
               <tr>
                 <th className="px-6 py-4 font-medium">Product Name</th>
                 <th className="px-6 py-4 font-medium">Price</th>
@@ -205,14 +205,14 @@ export default function ProductsPage() {
             <tbody className="divide-y divide-border">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
-                    <Loader2 className="mx-auto h-6 w-6 animate-spin mb-2" />
+                  <td colSpan={6} className="px-6 py-12 text-center text-text-muted">
+                    <Loader2 className="mx-auto h-6 w-6 animate-spin mb-2 text-brand-purple" />
                     Loading products...
                   </td>
                 </tr>
               ) : filteredProducts.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                  <td colSpan={6} className="px-6 py-12 text-center text-text-muted">
                     <Package className="mx-auto h-8 w-8 mb-3 opacity-20" />
                     {searchQuery ? "No products match your search." : "No products yet. Add your first product to get started."}
                   </td>
@@ -221,16 +221,16 @@ export default function ProductsPage() {
                 filteredProducts.map((product) => {
                   const status = getStockStatus(product.stock);
                   return (
-                    <tr key={product.id} className="hover:bg-muted/30 transition-colors">
-                      <td className="px-6 py-4 font-medium text-foreground">
+                    <tr key={product.id} className="hover:bg-surface-elevated/50 transition-colors">
+                      <td className="px-6 py-4 font-medium text-white">
                         <div>{product.name}</div>
                         {product.description && (
-                          <div className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{product.description}</div>
+                          <div className="text-xs text-text-muted mt-0.5 line-clamp-1">{product.description}</div>
                         )}
                       </td>
-                      <td className="px-6 py-4 font-medium">₹{product.price}</td>
-                      <td className="px-6 py-4 text-muted-foreground">{product.sale_price ? `₹${product.sale_price}` : "—"}</td>
-                      <td className="px-6 py-4">{product.stock}</td>
+                      <td className="px-6 py-4 font-medium text-white">₹{product.price}</td>
+                      <td className="px-6 py-4 text-text-muted">{product.sale_price ? `₹${product.sale_price}` : "—"}</td>
+                      <td className="px-6 py-4 text-white">{product.stock}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${status.cls}`}>
                           {status.label}
@@ -238,12 +238,12 @@ export default function ProductsPage() {
                       </td>
                       <td className="px-6 py-4 text-right space-x-1">
                         <Link href={`/content?productId=${product.id}`} title="Generate AI Content" passHref>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
-                            <Sparkles className="h-4 w-4 text-indigo-500" />
+                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-surface-elevated">
+                            <Sparkles className="h-4 w-4 text-brand-purple" />
                           </Button>
                         </Link>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted" onClick={() => handleEditClick(product)}>
-                          <Edit className="h-4 w-4 text-muted-foreground" />
+                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-surface-elevated" onClick={() => handleEditClick(product)}>
+                          <Edit className="h-4 w-4 text-text-muted" />
                         </Button>
                         <Button
                           variant="ghost" size="icon"
