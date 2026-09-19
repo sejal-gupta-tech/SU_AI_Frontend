@@ -49,12 +49,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           router.push('/admin/login');
         }
       } else {
-        if (isAdminRoute && user.role !== 'admin') {
+        const role = user.role || 'user'; // fallback just in case
+        
+        if (isAdminRoute && role !== 'admin') {
           router.push('/dashboard');
-        } else if (isProtectedRoute && user.role === 'admin') {
+        } else if (isProtectedRoute && role === 'admin') {
           router.push('/admin');
         } else if (isAuthRoute || isAdminLoginRoute) {
-          router.push(user.role === 'admin' ? '/admin' : '/dashboard');
+          router.push(role === 'admin' ? '/admin' : '/dashboard');
         }
       }
     }

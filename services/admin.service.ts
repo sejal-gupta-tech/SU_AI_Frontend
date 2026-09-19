@@ -1,37 +1,19 @@
+import api from '@/lib/api';
+import { AdminOverview } from '@/types/admin';
+
 export const adminService = {
   async getUsers() {
-    const token = localStorage.getItem('access_token');
-    if (!token) throw new Error('No access token');
-    
-    const response = await fetch('http://localhost:8000/api/v1/admin/users', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    
-    if (!response.ok) {
-      if (response.status === 403) throw new Error('Forbidden: Admin access required');
-      throw new Error('Failed to fetch users');
-    }
-    
-    return response.json();
+    const response = await api.get('/api/v1/admin/users');
+    return response.data;
   },
 
   async getBusinesses() {
-    const token = localStorage.getItem('access_token');
-    if (!token) throw new Error('No access token');
-    
-    const response = await fetch('http://localhost:8000/api/v1/admin/businesses', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    
-    if (!response.ok) {
-      if (response.status === 403) throw new Error('Forbidden: Admin access required');
-      throw new Error('Failed to fetch businesses');
-    }
-    
-    return response.json();
+    const response = await api.get('/api/v1/admin/businesses');
+    return response.data;
+  },
+
+  async getAdminOverview(): Promise<AdminOverview> {
+    const response = await api.get('/api/v1/admin/dashboard/overview');
+    return response.data;
   }
 };

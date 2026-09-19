@@ -25,7 +25,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     // Handle global errors like 401 Unauthorized
-    if (error.response?.status === 401 && window.location.pathname !== '/login') {
+    if (error.response?.status === 401 && window.location.pathname !== '/login' && window.location.pathname !== '/admin/login') {
       localStorage.removeItem('access_token');
       localStorage.removeItem('user');
       window.location.href = '/login';
