@@ -10,10 +10,11 @@ export const authService = {
         user: response.data.user
       };
     } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.detail) {
-        throw new Error(error.response.data.detail);
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail;
+        throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
       }
-      throw new Error('An error occurred during login');
+      throw new Error(error.message || 'An error occurred during login');
     }
   },
 
@@ -25,10 +26,11 @@ export const authService = {
         user: response.data.user
       };
     } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.detail) {
-        throw new Error(error.response.data.detail);
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail;
+        throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
       }
-      throw new Error('An error occurred during signup');
+      throw new Error(error.message || 'An error occurred during signup');
     }
   },
 
