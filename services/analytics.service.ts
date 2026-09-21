@@ -1,9 +1,9 @@
 import api from "@/lib/api";
-import { AnalyticsResponse } from "@/types/analytics";
+import { AnalyticsApiResponse, AnalyticsData } from "@/types/analytics";
 
 export const analyticsService = {
-  getAnalyticsOverview: async (range: 7 | 30 | 90): Promise<AnalyticsResponse> => {
-    const res = await api.get(`/api/v1/analytics/overview?range=${range}`);
-    return res.data;
+  getAnalyticsOverview: async (range: 7 | 30 | 90): Promise<AnalyticsData> => {
+    const res = await api.get<AnalyticsApiResponse>(`/api/v1/analytics/overview?range=${range}d`);
+    return res.data.data;
   },
 };
