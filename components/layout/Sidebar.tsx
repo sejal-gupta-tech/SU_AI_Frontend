@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -43,6 +43,7 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
 );
 
 const navigation = [
+  { name: "UNI AI (Hinglish)", href: "/uni-ai", icon: Sparkles },
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Analytics", href: "/analytics", icon: TrendingUp },
   { name: "Business", href: "/business", icon: Store },

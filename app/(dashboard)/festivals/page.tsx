@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect, useCallback } from "react";
 import festivalService, {
   FestivalCampaign,
@@ -254,7 +254,8 @@ function CampaignModal({
             </>
           )}
           {campaign.status === "approved" && (
-            <div
+            <button
+              onClick={onClose}
               style={{
                 flex: 1,
                 padding: "12px",
@@ -264,10 +265,11 @@ function CampaignModal({
                 color: "#22C55E",
                 fontWeight: 700,
                 textAlign: "center",
+                cursor: "pointer",
               }}
             >
               ✅ Campaign Approved & Scheduled in Autopilot!
-            </div>
+            </button>
           )}
         </div>
       </div>
