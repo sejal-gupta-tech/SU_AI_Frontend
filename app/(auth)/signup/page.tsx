@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Sparkles, Loader2 } from "lucide-react";
+import { Loader2, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,7 +18,13 @@ import { Logo } from "@/components/ui/Logo";
 const signupSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
   email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" })
+    .regex(/[A-Z]/, { message: "Must contain at least one uppercase letter" })
+    .regex(/[a-z]/, { message: "Must contain at least one lowercase letter" })
+    .regex(/[0-9]/, { message: "Must contain at least one number" })
+    .regex(/[^A-Za-z0-9]/, { message: "Must contain at least one special character" }),
   confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
@@ -30,24 +36,45 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 export default function SignupPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
+    mode: "onChange",
   });
+
+  const passwordValue = useWatch({
+    control,
+    name: "password",
+    defaultValue: "",
+  });
+
+  const confirmPasswordValue = useWatch({
+    control,
+    name: "confirmPassword",
+    defaultValue: "",
+  });
+
+  const requirements = [
+    { label: "8+ characters", met: passwordValue.length >= 8 },
+    { label: "uppercase letter", met: /[A-Z]/.test(passwordValue) },
+    { label: "lowercase letter", met: /[a-z]/.test(passwordValue) },
+    { label: "number", met: /[0-9]/.test(passwordValue) },
+    { label: "special character", met: /[^A-Za-z0-9]/.test(passwordValue) },
+    { label: "passwords match", met: passwordValue !== "" && passwordValue === confirmPasswordValue },
+  ];
 
   const onSubmit = async (data: SignupFormValues) => {
     setIsLoading(true);
     setError("");
     try {
-      const response = await authService.signup(data.name, data.email, data.password);
-      login(response.token, response.user);
-      router.push('/onboarding');
+      await authService.signup(data.name, data.email, data.password);
+      router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -102,9 +129,14 @@ export default function SignupPage() {
                   {...register("password")}
                   className={errors.password ? "border-red-500" : ""}
                 />
-                {errors.password && (
-                  <p className="text-xs text-red-500">{errors.password.message}</p>
-                )}
+                <div className="pt-2 grid grid-cols-1 gap-1.5 text-xs text-text-muted">
+                  {requirements.map((req, i) => (
+                    <div key={i} className={`flex items-center gap-2 ${req.met ? "text-green-500" : "text-text-muted"}`}>
+                      {req.met ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                      <span>{req.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -128,12 +160,12 @@ export default function SignupPage() {
           </CardContent>
         </Card>
         
-        <p className="text-center text-sm text-text-muted">
+        <div className="text-center text-sm text-text-muted mt-6 pb-6">
           Already have an account?{" "}
-          <Link href="/login" className="text-brand-pink font-medium hover:underline">
+          <Link href="/login/user" className="text-brand-pink font-medium hover:underline">
             Sign in
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

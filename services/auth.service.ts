@@ -10,10 +10,11 @@ export const authService = {
         user: response.data.user
       };
     } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.detail) {
-        throw new Error(error.response.data.detail);
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail;
+        throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
       }
-      throw new Error('An error occurred during login');
+      throw new Error(error.message || 'An error occurred during login');
     }
   },
 
@@ -25,10 +26,11 @@ export const authService = {
         user: response.data.user
       };
     } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.detail) {
-        throw new Error(error.response.data.detail);
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail;
+        throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
       }
-      throw new Error('An error occurred during signup');
+      throw new Error(error.message || 'An error occurred during signup');
     }
   },
 
@@ -38,6 +40,32 @@ export const authService = {
       return response.data;
     } catch (error: any) {
       throw new Error('Failed to fetch user');
+    }
+  },
+
+  verifyEmail: async (email: string, otp: string): Promise<{status: string, message: string}> => {
+    try {
+      const response = await api.post('/api/v1/auth/verify-otp', { email, otp });
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        const detail = error.response.data.detail;
+        throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+      }
+      throw new Error(error.message || 'Failed to verify email');
+    }
+  },
+
+  resendOtp: async (email: string): Promise<{status: string, message: string}> => {
+    try {
+      const response = await api.post('/api/v1/auth/resend-otp', { email });
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        const detail = error.response.data.detail;
+        throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+      }
+      throw new Error(error.message || 'Failed to resend OTP');
     }
   }
 };

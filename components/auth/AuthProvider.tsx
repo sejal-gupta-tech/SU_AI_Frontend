@@ -43,36 +43,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isLoading) {
-      const isAuthRoute = pathname === '/login' || pathname === '/signup';
-      const isAdminLoginRoute = pathname === '/admin/login';
+      const isAuthRoute = pathname === '/login/user' || pathname === '/signup';
+      const isVerifyEmailRoute = pathname === '/verify-email';
+      const isAdminLoginRoute = pathname === '/login/admin';
       const isProtectedRoute = ['/dashboard', '/business', '/brand', '/products', '/settings', '/onboarding', '/content', '/content-library', '/campaigns', '/messages', '/reviews', '/social-platforms', '/create', '/create-ad', '/ai-'].some(route => pathname.startsWith(route));
-      const isAdminRoute = pathname.startsWith('/admin') && !isAdminLoginRoute;
+      const isAdminRoute = pathname.startsWith('/admin');
 
       if (!user) {
         if (isAdminRoute) {
-          router.replace('/admin/login');
+          router.replace('/login/admin');
         } else if (isProtectedRoute) {
-          router.replace('/login');
+          router.replace('/login/user');
         }
       } else {
         const role = user.role || 'user';
-        
-        if (isAdminRoute && role !== 'admin') {
+        const isVerified = user.email_verified !== false; // treat undefined as verified to support legacy users
+
+        if (!isVerified && !isVerifyEmailRoute) {
+          router.replace('/verify-email');
+        } else if (isVerified && isVerifyEmailRoute) {
+          router.replace('/dashboard');
+        } else if (isAdminRoute && role !== 'admin') {
           router.replace('/dashboard');
         } else if (isAdminLoginRoute && role !== 'admin') {
           router.replace('/dashboard');
         } else if (isAuthRoute && role === 'admin') {
+          // Normal user shouldn't go to admin, admin shouldn't go to user login
+          // We reject auth route login if already logged in by sending them to their respective dashboard
           router.replace('/admin');
         } else if (isAuthRoute && role === 'user') {
-          if (pathname === '/signup') {
-             // If already logged in, no need to stay on signup
-             // In case they just signed up, they should go to onboarding
-             // For safety we redirect to dashboard, but signup's onSubmit will push to onboarding if it can.
-             // Actually, if we are on signup, we redirect to dashboard.
-             router.replace('/dashboard');
-          } else {
-             router.replace('/dashboard');
-          }
+          router.replace('/dashboard');
         } else if (isAdminLoginRoute && role === 'admin') {
           router.replace('/admin');
         }
@@ -91,7 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     setUser(null);
-    router.replace(wasAdmin ? '/admin/login' : '/login');
+    router.replace(wasAdmin ? '/login/admin' : '/login/user');
   };
 
   return (

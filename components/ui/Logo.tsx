@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Sparkles } from "lucide-react";
 
 interface LogoProps {
   className?: string;
@@ -19,12 +20,9 @@ export function Logo({ className, withText = true, size = "default", showSubtitl
           isSm ? "h-8 w-8" : isLg ? "h-16 w-16" : "h-10 w-10 md:h-12 md:w-12"
         )}
       >
-        {/* Using standard img tag to prevent Next.js Image optimization errors if file is missing locally during dev */}
-        <img 
-          src="/sevenunique-logo.png" 
-          alt="SevenUnique" 
-          className="h-full w-full object-contain"
-        />
+        <div className="bg-brand-pink/20 text-brand-pink p-1.5 rounded-md flex items-center justify-center h-full w-full">
+          <Sparkles className="h-full w-full" />
+        </div>
       </div>
       {withText && (
         <div className="flex flex-col justify-center min-w-0 overflow-hidden">
