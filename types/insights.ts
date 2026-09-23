@@ -4,10 +4,10 @@ export interface Insight {
   businessId?: string;
   title: string;
   description: string;
-  priority: 'High' | 'Medium' | 'Low';
+  priority: "High" | "Medium" | "Low";
   recommendedAction: string;
-  actionType: 'Create Post' | 'Create Reel' | 'Create Ad' | 'Promote Product' | string;
-  actionTarget?: string; // e.g. pre-fill content type
-  createdAt: string;
-  updatedAt: string;
+  actionType: "Create Post" | "Create Reel" | "Create Ad" | "Promote Product" | "View Analytics" | string;
+  actionTarget?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

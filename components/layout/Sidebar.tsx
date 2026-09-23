@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LayoutDashboard, Store, Palette, Package, Settings, LogOut, Sparkles, Megaphone, MessageSquare, Star, Library, Share2, ChevronDown, ChevronRight, Globe, TrendingUp } from "lucide-react";
+import { LayoutDashboard, Store, Palette, Package, Settings, LogOut, Sparkles, Megaphone, MessageSquare, Star, Library, Share2, ChevronDown, ChevronRight, Globe, TrendingUp, Bot, PartyPopper } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { Logo } from "@/components/ui/Logo";
@@ -61,6 +61,8 @@ const navigation = [
     ]
   },
   { name: "AI Content", href: "/content", icon: Sparkles },
+  { name: "Autopilot", href: "/autopilot", icon: Bot },
+  { name: "Festival Engine", href: "/festivals", icon: PartyPopper },
   { name: "Content Library", href: "/content-library", icon: Library },
   { name: "Campaigns", href: "/campaigns", icon: Megaphone },
   { name: "Messages", href: "/messages", icon: MessageSquare },
