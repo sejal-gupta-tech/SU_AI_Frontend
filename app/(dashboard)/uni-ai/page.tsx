@@ -60,7 +60,12 @@ export default function UniAIPage() {
   const [loading, setLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const activeSession = sessions.find((s) => s.id === activeId) ?? sessions[0];
 
@@ -268,6 +273,8 @@ export default function UniAIPage() {
     if (hrs < 24) return `${hrs}h ago`;
     return new Date(d).toLocaleDateString();
   };
+
+  if (!mounted) return null;
 
   return (
     <div style={{ height: "calc(100vh - 64px)", display: "flex", background: "#0a0a14", position: "relative", overflow: "hidden" }}>

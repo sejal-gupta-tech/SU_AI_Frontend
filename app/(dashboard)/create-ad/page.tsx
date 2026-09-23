@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import { getProducts } from "@/services/product.service";
+import { Product } from "@/types/product";
 
 import PlatformSelector from "@/components/create-ad/PlatformSelector";
 import ObjectiveSelector from "@/components/create-ad/ObjectiveSelector";
@@ -11,6 +14,20 @@ export default function CreateAdPage() {
 
   const [productId, setProductId] =
     useState("");
+
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (err) {
+        console.error("Failed to load products");
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const [platform, setPlatform] =
     useState("instagram");
@@ -78,14 +95,18 @@ export default function CreateAdPage() {
               Product
             </label>
 
-            <input
+            <select
               value={productId}
               onChange={(e) =>
                 setProductId(e.target.value)
               }
-              placeholder="Select Product ID"
               className="w-full rounded-lg border border-border bg-surface-elevated text-white p-3 focus:ring-2 focus:ring-brand-purple outline-none"
-            />
+            >
+              <option value="">Select a Product</option>
+              {products.map((p) => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
 
           </div>
 
