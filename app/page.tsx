@@ -13,19 +13,21 @@ export default function Home() {
         <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] rounded-full bg-brand-coral/10 blur-[100px]" />
       </div>
 
-      <header className="px-6 h-20 flex items-center border-b border-white/5 bg-background/60 backdrop-blur-xl fixed top-0 w-full z-50">
-        <Logo />
-        <nav className="ml-auto flex items-center gap-4 sm:gap-6">
-          <Link href="/login" className="text-sm font-medium text-text-secondary hover:text-white transition-colors">
-            Login as User
-          </Link>
-          <Link href="/admin/login" className="text-sm font-medium text-text-secondary hover:text-white transition-colors">
-            Admin Login
-          </Link>
-          <Button asChild>
-            <Link href="/signup">Get Started</Link>
-          </Button>
-        </nav>
+      <header className="px-6 py-4 border-b border-border bg-background/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <Logo />
+          <nav className="flex items-center gap-6">
+            <Link href="/login/user" className="text-sm font-medium text-text-secondary hover:text-white transition-colors">
+              User Login
+            </Link>
+            <Link href="/login/admin" className="text-sm font-medium text-text-secondary hover:text-white transition-colors">
+              Admin Login
+            </Link>
+            <Link href="/signup">
+              <Button className="h-9 px-4">Get Started</Button>
+            </Link>
+          </nav>
+        </div>
       </header>
       
       <main className="flex-1 flex flex-col items-center justify-center pt-32 pb-16 px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -47,14 +49,14 @@ export default function Home() {
             Create stunning social media posts, run ads, and manage your brand effortlessly. SevenUnique AI is your personal AI marketing agency.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-            <Button asChild size="lg" className="w-full sm:w-auto text-base h-14 px-8">
-              <Link href="/signup">
-                Start for free <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto text-base h-14 px-8 border-white/20">
-              <Link href="/login">View Demo</Link>
+          <div className="flex items-center justify-center gap-4 pt-8">
+            <Link href="/signup">
+              <Button size="lg" className="h-12 px-8 text-base shadow-lg shadow-brand-pink/20">
+                Start Creating Now <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+            <Button size="lg" variant="outline" className="h-12 px-8 text-base border-border hover:bg-surface" asChild>
+              <Link href="/login/user">View Demo</Link>
             </Button>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -16,7 +17,7 @@ import { Logo } from "@/components/ui/Logo";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  password: z.string().min(1, { message: "Password is required" }),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -25,6 +26,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
+  const router = useRouter();
 
   const {
     register,
@@ -39,9 +41,17 @@ export default function LoginPage() {
     setError("");
     try {
       const response = await authService.login(data.email, data.password);
+      if (response.user.role === 'admin') {
+        throw new Error("Administrators must log in through the Admin Portal.");
+      }
       login(response.token, response.user);
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      const msg = err.message || "Something went wrong";
+      if (msg.includes("EMAIL_NOT_VERIFIED") || msg.toLowerCase().includes("verification")) {
+        router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
+      } else {
+        setError(msg);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -52,9 +62,9 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <Logo withText={false} className="scale-125 mb-4" />
-          <h1 className="text-3xl font-bold tracking-tight text-white">Welcome back</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-white">User Login</h1>
           <p className="text-sm text-text-muted">
-            Enter your email to sign in to your account
+            Sign in to access your dashboard
           </p>
         </div>
 

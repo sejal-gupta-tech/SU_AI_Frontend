@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect, useCallback } from "react";
 import festivalService, {
   FestivalCampaign,
@@ -96,7 +96,7 @@ function AssetCard({ asset }: { asset: FestivalAsset }) {
           {c.cta}
         </div>
       )}
-      {c.scheduled_date && (
+      {asset.scheduled_date && (
         <div style={{ marginTop: 6, fontSize: 11, color: "#777" }}>
           📅 {asset.scheduled_date}
         </div>
