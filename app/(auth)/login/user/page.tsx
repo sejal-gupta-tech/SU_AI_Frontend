@@ -52,7 +52,6 @@ export default function LoginPage() {
       } else {
         setError(msg);
       }
-    } finally {
       setIsLoading(false);
     }
   };
