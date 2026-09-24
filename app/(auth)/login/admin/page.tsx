@@ -51,7 +51,6 @@ export default function AdminLoginPage() {
       } else {
         setError(msg);
       }
-    } finally {
       setIsLoading(false);
     }
   };
