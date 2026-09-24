@@ -6,6 +6,7 @@ import { Users, Building2, CreditCard, Coins, Activity, Loader2, AlertCircle, Re
 import { adminService } from "@/services/admin.service";
 import { AdminOverview } from "@/types/admin";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -23,6 +24,7 @@ const formatDate = (dateString: string) => {
 };
 
 export default function AdminOverviewPage() {
+  const { user, isLoading: authLoading } = useAuth();
   const [data, setData] = useState<AdminOverview | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,8 +44,10 @@ export default function AdminOverviewPage() {
   };
 
   useEffect(() => {
-    fetchDashboardData();
-  }, []);
+    if (!authLoading && user?.role === 'admin') {
+      fetchDashboardData();
+    }
+  }, [authLoading, user]);
 
   if (error) {
     return (
