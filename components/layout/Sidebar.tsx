@@ -58,7 +58,6 @@ const navigation = [
       { name: "Create Reel", href: "/create/reel" },
       { name: "AI Post Maker", href: "/ai-post" },
       { name: "AI Image Generator", href: "/ai-image" },
-      { name: "AI Photoshoot", href: "/ai-photoshoot" },
       { name: "AI Calendar", href: "/ai-calendar" },
     ]
   },
@@ -96,7 +95,7 @@ export function Sidebar() {
   const { logout } = useAuth();
   
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({
-    "Social Media": ["/create-ad", "/create/reel", "/ai-post", "/ai-image", "/ai-photoshoot", "/ai-calendar"].some(p => pathname.startsWith(p)),
+    "Social Media": ["/create-ad", "/create/reel", "/ai-post", "/ai-image", "/ai-calendar"].some(p => pathname.startsWith(p)),
     "Fashion AI": ["/fashion-ai"].some(p => pathname.startsWith(p)),
     "Social Platforms": ["/social-platforms"].some(p => pathname.startsWith(p))
   });
