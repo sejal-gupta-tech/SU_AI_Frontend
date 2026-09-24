@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -61,6 +61,15 @@ const navigation = [
       { name: "AI Calendar", href: "/ai-calendar" },
     ]
   },
+  {
+    name: "Fashion AI",
+    icon: Sparkles,
+    children: [
+      { name: "AI Photoshoot", href: "/fashion-ai/photoshoot" },
+      { name: "Virtual Try-On", href: "/fashion-ai/virtual-try-on" },
+      { name: "History", href: "/fashion-ai/history" },
+    ]
+  },
   { name: "AI Content", href: "/content", icon: Sparkles },
   { name: "Autopilot", href: "/autopilot", icon: Bot },
   { name: "Festival Engine", href: "/festivals", icon: PartyPopper },
@@ -87,6 +96,7 @@ export function Sidebar() {
   
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({
     "Social Media": ["/create-ad", "/create/reel", "/ai-post", "/ai-image", "/ai-photoshoot", "/ai-calendar"].some(p => pathname.startsWith(p)),
+    "Fashion AI": ["/fashion-ai"].some(p => pathname.startsWith(p)),
     "Social Platforms": ["/social-platforms"].some(p => pathname.startsWith(p))
   });
 
