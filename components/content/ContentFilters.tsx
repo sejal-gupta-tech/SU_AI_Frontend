@@ -10,9 +10,6 @@ interface ContentFiltersProps {
 export function ContentFilters({ currentFilter, onFilterChange }: ContentFiltersProps) {
   const filters = [
     'All',
-    'Posts',
-    'Reels',
-    'Ads',
     'Drafts',
     'Scheduled',
     'Published'

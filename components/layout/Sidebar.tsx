@@ -71,9 +71,8 @@ const navigation = [
     ]
   },
   { name: "AI Content", href: "/content", icon: Sparkles },
-  { name: "Autopilot", href: "/autopilot", icon: Bot },
   { name: "Festival Engine", href: "/festivals", icon: PartyPopper },
-  { name: "Content Library", href: "/content-library", icon: Library },
+  { name: "Plan Content", href: "/content-library", icon: Library },
   { name: "Campaigns", href: "/campaigns", icon: Megaphone },
   { name: "Messages", href: "/messages", icon: MessageSquare },
   { name: "Reviews", href: "/reviews", icon: Star },
@@ -81,7 +80,6 @@ const navigation = [
     name: "Social Platforms",
     icon: Globe,
     children: [
-      { name: "WhatsApp", href: "/social-platforms/whatsapp", icon: WhatsAppIcon },
       { name: "Instagram", href: "/social-platforms/instagram", icon: InstagramIcon },
       { name: "Facebook", href: "/social-platforms/facebook", icon: FacebookIcon },
       { name: "LinkedIn", href: "/social-platforms/linkedin", icon: LinkedinIcon },

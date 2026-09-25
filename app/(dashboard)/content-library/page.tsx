@@ -87,12 +87,25 @@ export default function ContentLibraryPage() {
     }
   };
 
+  const markAsPublished = async () => {
+    if (!selectedContent) return;
+    try {
+      const publishedContent = { ...selectedContent, status: 'Published' as const };
+      await contentService.updateContent(selectedContent._id, publishedContent);
+      setContents(prev => prev.map(c => c._id === selectedContent._id ? publishedContent : c));
+      setSelectedContent(publishedContent);
+    } catch (error) {
+      console.error("Failed to update status to published:", error);
+    }
+  };
+
   // WhatsApp Publishing Flow
   const handlePublishWa = async () => {
     if (!selectedContent || !waPhone) return;
     setIsPublishingWa(true);
     try {
       await socialService.publishToWhatsApp(selectedContent._id, waPhone);
+      await markAsPublished();
       alert("Successfully sent to WhatsApp!");
       setShowWaRegister(false); // Hide just in case it was open
     } catch (error: any) {
@@ -130,6 +143,7 @@ export default function ContentLibraryPage() {
     setIsPublishingIg(true);
     try {
       await socialService.publishToInstagram(selectedContent._id);
+      await markAsPublished();
       alert("Successfully published to Instagram Feed!");
       setShowIgRegister(false);
     } catch (error: any) {
@@ -167,6 +181,7 @@ export default function ContentLibraryPage() {
     setIsPublishingLi(true);
     try {
       await socialService.publishToLinkedin(selectedContent._id);
+      await markAsPublished();
       alert("Successfully published to LinkedIn!");
       setShowLiRegister(false);
     } catch (error: any) {
@@ -203,6 +218,7 @@ export default function ContentLibraryPage() {
     setIsPublishingFb(true);
     try {
       await socialService.publishToFacebook(selectedContent._id);
+      await markAsPublished();
       alert("Successfully published to Facebook Page!");
       setShowFbRegister(false);
     } catch (error: any) {
@@ -236,12 +252,12 @@ export default function ContentLibraryPage() {
 
   const filteredContents = contents.filter(c => {
     if (filter === 'All') return true;
-    if (filter === 'Drafts' || filter === 'Scheduled' || filter === 'Published') {
-      return c.status === filter;
-    }
-    if (filter === 'Posts') return c.type?.includes('Post') || c.type?.includes('Caption');
-    if (filter === 'Reels') return c.type?.includes('Reel');
-    if (filter === 'Ads') return c.type?.includes('Ad');
+    
+    const status = c.status?.toLowerCase();
+    if (filter === 'Drafts') return status === 'draft' || status === 'drafts';
+    if (filter === 'Scheduled') return status === 'scheduled';
+    if (filter === 'Published') return status === 'published';
+
     return true;
   });
 
@@ -251,7 +267,7 @@ export default function ContentLibraryPage() {
         <div className="flex items-center gap-2">
           <Library className="h-6 w-6 text-brand-purple" />
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-white">Content Library</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-white">Plan Content</h1>
             <p className="text-text-muted mt-1">Manage your generated AI content and publish them.</p>
           </div>
         </div>

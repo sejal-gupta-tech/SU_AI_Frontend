@@ -31,6 +31,9 @@ export function ContentPreview({ content, onRegenerate, onSave }: ContentPreview
   };
 
   const handleSchedule = () => {
+    const scheduledContent = { ...editedContent, status: 'Scheduled' as const };
+    onSave(scheduledContent);
+    setIsEditing(false);
     alert("Content scheduled for posting!");
   };
 
@@ -110,7 +113,7 @@ export function ContentPreview({ content, onRegenerate, onSave }: ContentPreview
           )}
         </div>
 
-        {editedContent.suggestions.length > 0 && !isEditing && (
+        {editedContent.suggestions && editedContent.suggestions.length > 0 && !isEditing && (
           <div className="space-y-2 pt-4 border-t border-border">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">AI Suggestions</h3>
             <ul className="list-disc pl-5 space-y-1">
